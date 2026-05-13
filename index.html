@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Boxbar" />
+<title>Boxbar Field Report</title>
+<style>
+  :root {
+    --bg: #0d0f12;
+    --surface: #161a20;
+    --surface2: #1e2329;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.15);
+    --accent: #ff00cc;
+    --accent-dim: rgba(255,0,204,0.12);
+    --accent-dim2: rgba(255,0,204,0.22);
+    --text: #f0f2f5;
+    --text-muted: #8a9099;
+    --text-dim: #555c66;
+    --danger: #ff5c5c;
+    --danger-dim: rgba(255,92,92,0.1);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --font: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    padding-bottom: 130px;
+  }
+
+  .app-header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(13,15,18,0.93);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .app-title span:first-child {
+    display: block; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  }
+
+  .app-title span:last-child {
+    display: block; font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.1;
+  }
+
+  .header-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.45; transform:scale(0.82); }
+  }
+
+  .section { padding: 20px 16px 0; }
+
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-dim);
+    margin-bottom: 10px; padding-left: 4px;
+  }
+
+  /* Event card */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 12px;
+  }
+
+  .card-row {
+    display: flex; align-items: center;
+    padding: 13px 16px; border-bottom: 1px solid var(--border); gap: 12px;
+  }
+
+  .card-row:last-child { border-bottom: none; }
+
+  .card-row label { font-size: 14px; color: var(--text-muted); min-width: 100px; flex-shrink: 0; }
+
+  .card-row input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-size: 14px; font-family: var(--font);
+    text-align: right; min-width: 0; -webkit-appearance: none;
+  }
+
+  .card-row input[type="date"] { color-scheme: dark; }
+
+  /* Location block */
+  .location-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
+    animation: slideIn 0.25s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .location-header {
+    background: var(--surface2); padding: 13px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .location-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent); flex-shrink: 0;
+  }
+
+  .location-name-preview {
+    font-size: 13px; color: var(--text-muted);
+    flex: 1; margin: 0 10px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .remove-location-btn {
+    background: var(--danger-dim); border: 1px solid rgba(255,92,92,0.2);
+    color: var(--danger); border-radius: 6px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0;
+    font-family: var(--font);
+  }
+
+  .loc-zone-row {
+    display: flex; align-items: center;
+    padding: 13px 16px; border-bottom: 1px solid var(--border); gap: 12px;
+  }
+
+  .loc-zone-row label { font-size: 14px; color: var(--text-muted); min-width: 100px; flex-shrink: 0; }
+
+  .loc-zone-row input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-size: 14px; font-family: var(--font);
+    text-align: right; min-width: 0; -webkit-appearance: none;
+  }
+
+  /* Machines area inside location */
+  .machines-area { padding: 12px 12px 8px; }
+
+  .machines-sublabel {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-dim);
+    margin-bottom: 8px; padding-left: 2px;
+  }
+
+  /* Machine card */
+  .machine-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); margin-bottom: 10px; overflow: hidden;
+    animation: slideIn 0.2s ease;
+  }
+
+  .machine-header {
+    background: var(--surface2); padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .machine-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  .machine-product-preview {
+    font-size: 12px; color: var(--text-muted);
+    flex: 1; margin: 0 8px; text-align: right;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  .remove-btn {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--danger-dim); border: 1px solid rgba(255,92,92,0.2);
+    color: var(--danger); font-size: 17px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; font-family: var(--font);
+  }
+
+  .m-row {
+    display: flex; align-items: center;
+    padding: 11px 14px; border-bottom: 1px solid var(--border); gap: 10px;
+  }
+
+  .m-row label { font-size: 13px; color: var(--text-muted); min-width: 90px; flex-shrink: 0; }
+
+  .m-row input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-size: 13px; font-family: var(--font);
+    text-align: right; min-width: 0; -webkit-appearance: none;
+  }
+
+  .m-row select {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-size: 13px; font-family: var(--font);
+    text-align: right; min-width: 0; -webkit-appearance: none;
+    cursor: pointer;
+  }
+
+  .m-row select option {
+    background: #1e2329; color: var(--text);
+  }
+
+  .pour-row { display: flex; border-bottom: 1px solid var(--border); }
+
+  .pour-cell {
+    flex: 1; padding: 10px 12px; display: flex; flex-direction: column;
+    gap: 3px; border-right: 1px solid var(--border);
+  }
+
+  .pour-cell:last-child { border-right: none; }
+
+  .pour-cell label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-dim);
+  }
+
+  .pour-cell input {
+    background: none; border: none; outline: none;
+    color: var(--text); font-size: 17px; font-weight: 600;
+    font-family: var(--font); width: 100%; -webkit-appearance: none;
+  }
+
+  .pour-unit { font-size: 10px; color: var(--text-dim); }
+
+  .notes-row { padding: 10px 14px; }
+
+  .notes-row label {
+    display: block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 6px;
+  }
+
+  .notes-row textarea {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text);
+    font-size: 13px; font-family: var(--font);
+    padding: 9px 11px; resize: none; min-height: 64px; outline: none; line-height: 1.5;
+  }
+
+  /* Add buttons */
+  .add-machine-btn {
+    width: 100%; padding: 11px;
+    background: var(--accent-dim); border: 1px dashed rgba(253,0,189,0.3);
+    border-radius: var(--radius-sm); color: var(--accent);
+    font-size: 13px; font-weight: 600; font-family: var(--font);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    gap: 6px; margin-bottom: 4px;
+  }
+
+  .add-machine-btn:active { background: var(--accent-dim2); }
+
+  .add-location-btn {
+    width: 100%; padding: 14px;
+    background: var(--accent-dim); border: 1px dashed rgba(253,0,189,0.3);
+    border-radius: var(--radius); color: var(--accent);
+    font-size: 15px; font-weight: 600; font-family: var(--font);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 14px;
+  }
+
+  .add-location-btn:active { background: var(--accent-dim2); }
+
+  /* Bottom bar */
+  .btn-row {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: rgba(13,15,18,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border); display: flex; gap: 10px;
+  }
+
+  .btn {
+    flex: 1; padding: 14px 10px; border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 600; font-family: var(--font);
+    cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+
+  .btn:active { opacity: 0.8; transform: scale(0.97); }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border-strong); }
+  .btn-danger { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(255,92,92,0.2); }
+
+  /* Stats */
+  .stats-bar {
+    display: flex; gap: 8px; margin: 12px 16px 0; flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 100px; padding: 5px 12px;
+    font-size: 12px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  .stat-pill strong { color: var(--accent); font-weight: 700; }
+
+  /* Toast */
+  .toast {
+    position: fixed; top: 80px; left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: var(--surface2); border: 1px solid var(--border-strong);
+    border-radius: 100px; padding: 10px 20px;
+    font-size: 13px; font-weight: 500; color: var(--text);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    white-space: nowrap; z-index: 999;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.success { color: var(--accent); border-color: rgba(253,0,189,0.35); }
+
+  /* Modals */
+  .modal-bg {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); z-index: 200;
+    align-items: flex-end; justify-content: center;
+  }
+
+  .modal-bg.open { display: flex; }
+
+  .modal {
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: 20px 20px 0 0; padding: 20px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    width: 100%; max-width: 480px;
+  }
+
+  .modal h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .modal p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
+  .modal-actions { display: flex; gap: 10px; }
+
+  /* Preview */
+  .preview-modal {
+    display: none; position: fixed; inset: 0;
+    background: var(--bg); z-index: 300;
+    overflow-y: auto; padding: 20px 16px 110px;
+  }
+
+  .preview-modal.open { display: block; }
+
+  .preview-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .preview-header h2 { font-size: 18px; font-weight: 700; }
+
+  .preview-close {
+    padding: 8px 16px; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 100px;
+    color: var(--text); font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: var(--font);
+  }
+
+  .preview-text {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px;
+    font-size: 13px; line-height: 1.8; color: var(--text);
+    white-space: pre-wrap; word-break: break-word;
+    font-family: 'SF Mono', 'Courier New', monospace;
+  }
+
+  .preview-actions {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: rgba(13,15,18,0.95);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border); display: flex; gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">
+    <span>Boxbar</span>
+    <span>Field Report</span>
+  </div>
+  <div class="header-dot"></div>
+</div>
+
+<!-- Event Details -->
+<div class="section">
+  <div class="section-label">Event Details</div>
+  <div class="card">
+    <div class="card-row">
+      <label>Event Name</label>
+      <input type="text" id="eventName" />
+    </div>
+    <div class="card-row">
+      <label>Date</label>
+      <input type="date" id="eventDate" />
+    </div>
+    <div class="card-row" style="border-bottom:none">
+      <label>Venue</label>
+      <input type="text" id="venue" />
+    </div>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-bar" id="statsBar" style="display:none">
+  <div class="stat-pill">📍 <strong id="statLocations">0</strong> locations</div>
+  <div class="stat-pill">🖥 <strong id="statMachines">0</strong> machines</div>
+  <div class="stat-pill">⏱ avg <strong id="statAvgPour">—</strong>s</div>
+</div>
+
+<!-- Locations -->
+<div class="section" style="padding-top:16px">
+  <div class="section-label">Locations</div>
+  <div id="locationsList"></div>
+  <button class="add-location-btn" onclick="addLocation()">
+    <span style="font-size:20px;line-height:1">+</span> Add Location
+  </button>
+</div>
+
+<!-- Bottom buttons -->
+<div class="btn-row">
+  <button class="btn btn-secondary" onclick="openClearModal()">🗑 Clear</button>
+  <button class="btn btn-secondary" onclick="previewReport()">👁 Preview</button>
+  <button class="btn btn-primary" onclick="copyReport()">📋 Copy Report</button>
+</div>
+
+<!-- Clear Modal -->
+<div class="modal-bg" id="clearModal">
+  <div class="modal">
+    <h3>Clear template?</h3>
+    <p>This will reset all event details and location data. This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" style="flex:1" onclick="closeClearModal()">Cancel</button>
+      <button class="btn btn-danger" style="flex:1" onclick="clearAll()">Yes, clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="preview-modal" id="previewModal">
+  <div class="preview-header">
+    <h2>Report Preview</h2>
+    <button class="preview-close" onclick="closePreview()">Done</button>
+  </div>
+  <pre class="preview-text" id="previewText"></pre>
+  <div class="preview-actions">
+    <button class="btn btn-secondary" onclick="closePreview()">Back</button>
+    <button class="btn btn-primary" onclick="copyFromPreview()">📋 Copy Report</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let locationCount = 0;
+  let machineCounters = {};
+
+  function addLocation() {
+    locationCount++;
+    const lid = locationCount;
+    machineCounters[lid] = 0;
+
+    const list = document.getElementById('locationsList');
+    const block = document.createElement('div');
+    block.className = 'location-block';
+    block.id = 'loc-' + lid;
+    block.innerHTML = `
+      <div class="location-header">
+        <span class="location-tag">Location ${lid}</span>
+        <span class="location-name-preview" id="lname-${lid}"></span>
+        <button class="remove-location-btn" onclick="removeLocation(${lid})">Remove</button>
+      </div>
+      <div class="loc-zone-row">
+        <label>Zone / Area</label>
+        <input type="text" id="lzone-${lid}" oninput="updateLocationLabel(${lid})" />
+      </div>
+      <div class="machines-area">
+        <div class="machines-sublabel">Machines</div>
+        <div id="machines-${lid}"></div>
+        <button class="add-machine-btn" onclick="addMachine(${lid})">
+          <span style="font-size:16px;line-height:1">+</span> Add Machine
+        </button>
+      </div>
+    `;
+    list.appendChild(block);
+    addMachine(lid);
+    addMachine(lid);
+    addMachine(lid);
+    updateStats();
+  }
+
+  function removeLocation(lid) {
+    const el = document.getElementById('loc-' + lid);
+    if (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-6px)';
+      el.style.transition = 'opacity 0.2s, transform 0.2s';
+      setTimeout(() => { el.remove(); updateStats(); }, 200);
+    }
+  }
+
+  function updateLocationLabel(lid) {
+    const zone = document.getElementById('lzone-' + lid);
+    const preview = document.getElementById('lname-' + lid);
+    if (zone && preview) preview.textContent = zone.value.trim();
+  }
+
+  function addMachine(lid) {
+    machineCounters[lid] = (machineCounters[lid] || 0) + 1;
+    const mid = machineCounters[lid];
+    const uid = lid + '_' + mid;
+
+    const list = document.getElementById('machines-' + lid);
+    const div = document.createElement('div');
+    div.className = 'machine-card';
+    div.id = 'mc-' + uid;
+    div.innerHTML = `
+      <div class="machine-header">
+        <span class="machine-num">Machine ${mid}</span>
+        <span class="machine-product-preview" id="mp-${uid}"></span>
+        <button class="remove-btn" onclick="removeMachine('${uid}')">×</button>
+      </div>
+      <div class="m-row">
+        <label>Machine No.</label>
+        <input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}')" />
+      </div>
+      <div class="m-row">
+        <label>Product</label>
+        <input type="text" data-field="product" oninput="updateMachineLabel('${uid}')" />
+      </div>
+      <div class="m-row">
+        <label>PSI</label>
+        <input type="number" data-field="psi" inputmode="decimal" />
+      </div>
+      <div class="m-row">
+        <label>Gas Type</label>
+        <select data-field="gasType">
+          <option value="" disabled selected></option>
+          <option value="CO2">CO2</option>
+          <option value="60/40">60/40</option>
+        </select>
+      </div>
+      <div class="pour-row">
+        <div class="pour-cell">
+          <label>Tap 1</label>
+          <input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="updateStats()" />
+          <span class="pour-unit">seconds</span>
+        </div>
+        <div class="pour-cell">
+          <label>Tap 2</label>
+          <input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="updateStats()" />
+          <span class="pour-unit">seconds</span>
+        </div>
+      </div>
+      <div class="notes-row">
+        <label>Notes</label>
+        <textarea data-field="notes" rows="3"></textarea>
+      </div>
+    `;
+    list.appendChild(div);
+    updateStats();
+  }
+
+  function removeMachine(uid) {
+    const el = document.getElementById('mc-' + uid);
+    if (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(-5px)';
+      el.style.transition = 'opacity 0.18s, transform 0.18s';
+      setTimeout(() => { el.remove(); updateStats(); }, 180);
+    }
+  }
+
+  function updateMachineLabel(uid) {
+    const card = document.getElementById('mc-' + uid);
+    if (!card) return;
+    const mn = card.querySelector('[data-field="machineNumber"]').value.trim();
+    const pr = card.querySelector('[data-field="product"]').value.trim();
+    const preview = document.getElementById('mp-' + uid);
+    if (preview) preview.textContent = [mn, pr].filter(Boolean).join(' · ');
+  }
+
+  function updateStats() {
+    const locs = document.querySelectorAll('.location-block');
+    const machines = document.querySelectorAll('.machine-card');
+    const bar = document.getElementById('statsBar');
+    bar.style.display = locs.length > 0 ? 'flex' : 'none';
+    document.getElementById('statLocations').textContent = locs.length;
+    document.getElementById('statMachines').textContent = machines.length;
+
+    let pours = [];
+    machines.forEach(card => {
+      ['tap1','tap2'].forEach(f => {
+        const el = card.querySelector('[data-field="' + f + '"]');
+        if (el && el.value) pours.push(parseFloat(el.value));
+      });
+    });
+
+    document.getElementById('statAvgPour').textContent =
+      pours.length > 0 ? (pours.reduce((a,b) => a+b, 0) / pours.length).toFixed(1) : '—';
+  }
+
+  function formatReport() {
+    const event = document.getElementById('eventName').value.trim();
+    const date  = document.getElementById('eventDate').value;
+    const venue = document.getElementById('venue').value.trim();
+
+    let lines = [];
+    if (event) lines.push('Event: ' + event);
+    if (date) {
+      const d = new Date(date + 'T12:00:00');
+      lines.push('Date: ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }));
+    }
+    if (venue) lines.push('Venue: ' + venue);
+
+    const locBlocks = document.querySelectorAll('.location-block');
+    locBlocks.forEach((block, li) => {
+      const lid = block.id.replace('loc-', '');
+      const zone = (document.getElementById('lzone-' + lid) || {}).value || '';
+      lines.push('');
+      lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      lines.push('Location: ' + (zone.trim() || ('Zone ' + (li + 1))));
+      lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
+      const machineCards = block.querySelectorAll('.machine-card');
+      machineCards.forEach((card, mi) => {
+        const get = f => { const el = card.querySelector('[data-field="' + f + '"]'); return el ? el.value.trim() : ''; };
+        lines.push('');
+        lines.push('⸻');
+        lines.push('Machine number: ' + (get('machineNumber') || ('M' + (mi + 1))));
+        if (get('product'))  lines.push('Product: ' + get('product'));
+        if (get('gasType'))  lines.push('Gas Type: ' + get('gasType'));
+        if (get('psi'))      lines.push('PSI: ' + get('psi'));
+        if (get('tap1'))     lines.push('Tap 1 Pour Time: ' + get('tap1'));
+        if (get('tap2'))     lines.push('Tap 2 Pour Time: ' + get('tap2'));
+        if (get('notes'))    lines.push('Notes: ' + get('notes'));
+      });
+    });
+
+    return lines.join('\n').trim();
+  }
+
+  function showToast(msg, success) {
+    if (success === undefined) success = true;
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast' + (success ? ' success' : '');
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 2200);
+  }
+
+  function copyReport() {
+    const text = formatReport();
+    if (!document.querySelectorAll('.machine-card').length) {
+      showToast('Add at least one location & machine', false); return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      showToast('Report copied!');
+    }).catch(function() {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta); showToast('Report copied!');
+    });
+  }
+
+  function previewReport() {
+    document.getElementById('previewText').textContent = formatReport() || '(No data entered yet)';
+    document.getElementById('previewModal').classList.add('open');
+  }
+
+  function closePreview() { document.getElementById('previewModal').classList.remove('open'); }
+  function copyFromPreview() { copyReport(); setTimeout(closePreview, 400); }
+
+  function openClearModal() { document.getElementById('clearModal').classList.add('open'); }
+  function closeClearModal() { document.getElementById('clearModal').classList.remove('open'); }
+
+  function clearAll() {
+    ['eventName','eventDate','venue'].forEach(function(id) { document.getElementById(id).value = ''; });
+    document.getElementById('locationsList').innerHTML = '';
+    locationCount = 0; machineCounters = {};
+    closeClearModal();
+    addLocation();
+    updateStats();
+    showToast('Template cleared');
+  }
+
+  // Init with one location
+  addLocation();
+</script>
+</body>
+</html>
