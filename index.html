@@ -410,6 +410,10 @@
         <input type="text" id="eventDateDisplay" placeholder="" style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:var(--font); padding:8px 10px; outline:none; min-width:0;" />
       </div>
     </div>
+    <div class="card-row">
+      <label>Arrival Time</label>
+      <input type="time" id="arrivalTime" style="color-scheme:dark;" />
+    </div>
     <div class="card-row" style="border-bottom:none">
       <label>Venue</label>
       <input type="text" id="venue" />
@@ -654,14 +658,16 @@
   }
 
   function formatReport() {
-    const event = document.getElementById('eventName').value.trim();
-    const date  = document.getElementById('eventDateDisplay').value.trim();
-    const venue = document.getElementById('venue').value.trim();
+    const event       = document.getElementById('eventName').value.trim();
+    const date        = document.getElementById('eventDateDisplay').value.trim();
+    const arrivalTime = document.getElementById('arrivalTime').value.trim();
+    const venue       = document.getElementById('venue').value.trim();
 
     let lines = [];
-    if (event) lines.push('Event: ' + event);
-    if (date)  lines.push('Date: ' + date);
-    if (venue) lines.push('Venue: ' + venue);
+    if (event)       lines.push('Event: ' + event);
+    if (date)        lines.push('Date: ' + date);
+    if (arrivalTime) lines.push('Arrival Time: ' + arrivalTime);
+    if (venue)       lines.push('Venue: ' + venue);
     lines.push('');
 
     const locBlocks = document.querySelectorAll('.location-block');
@@ -741,7 +747,7 @@
   }
 
   function clearAll() {
-    ['eventName','venue','eventDateDisplay'].forEach(function(id) { document.getElementById(id).value = ''; });
+    ['eventName','venue','eventDateDisplay','arrivalTime'].forEach(function(id) { document.getElementById(id).value = ''; });
     document.getElementById('locationsList').innerHTML = '';
     locationCount = 0; machineCounters = {};
     closeClearModal();
