@@ -518,6 +518,10 @@
           <option value="No">No</option>
         </select>
       </div>
+      <div class="notes-row" style="border-top:1px solid var(--border);">
+        <label>Staff Trained</label>
+        <textarea id="lstaffTrained-${lid}" rows="2" placeholder="" style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:var(--font); padding:9px 11px; resize:none; outline:none; line-height:1.5; margin-top:6px;"></textarea>
+      </div>
       <div class="machines-area">
         <div class="machines-sublabel">Machines</div>
         <div id="machines-${lid}"></div>
@@ -663,13 +667,15 @@
       const freshKegs   = (document.getElementById('lfreshKegs-' + lid) || {}).value || '';
       const internet    = (document.getElementById('linternet-' + lid) || {}).value || '';
       const testPayment = (document.getElementById('ltestPayment-' + lid) || {}).value || '';
+      const staffTrained = (document.getElementById('lstaffTrained-' + lid) || {}).value || '';
 
       if (li > 0) lines.push('');
       lines.push('📍 ' + (zone.trim() || ('Zone ' + (li + 1))));
-      if (temp)        lines.push('Temperature: ' + temp);
-      if (freshKegs)   lines.push('Fresh Kegs: ' + freshKegs);
-      if (internet)    lines.push('Internet: ' + internet);
-      if (testPayment) lines.push('Test Payment: ' + testPayment);
+      if (temp)         lines.push('Temperature: ' + temp);
+      if (freshKegs)    lines.push('Fresh Kegs: ' + freshKegs);
+      if (internet)     lines.push('Internet: ' + internet);
+      if (testPayment)  lines.push('Test Payment: ' + testPayment);
+      if (staffTrained) lines.push('Staff Trained: ' + staffTrained);
 
       const machineCards = block.querySelectorAll('.machine-card');
       machineCards.forEach((card, mi) => {
