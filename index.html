@@ -412,7 +412,16 @@
     </div>
     <div class="card-row">
       <label>Arrival Time</label>
-      <input type="time" id="arrivalTime" style="color-scheme:dark;" />
+      <div style="display:flex; align-items:center; gap:4px; justify-content:flex-end;">
+        <input type="number" id="arrivalHour" min="1" max="12" placeholder="HH" oninput="formatArrival()" style="width:44px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:center; -webkit-appearance:none;" />
+        <span style="color:var(--text-muted); font-size:16px; font-weight:600;">:</span>
+        <input type="number" id="arrivalMin" min="0" max="59" placeholder="MM" oninput="formatArrival()" style="width:44px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:center; -webkit-appearance:none;" />
+        <select id="arrivalAmPm" style="background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); -webkit-appearance:none; cursor:pointer; margin-left:4px;">
+          <option value="" disabled selected></option>
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
     </div>
     <div class="card-row" style="border-bottom:none">
       <label>Venue</label>
@@ -495,7 +504,7 @@
         <input type="text" id="lzone-${lid}" oninput="updateLocationLabel(${lid})" />
       </div>
       <div class="loc-zone-row">
-        <label>Temperature</label>
+        <label>Product Temperature</label>
         <div style="display:flex; align-items:center; gap:4px; flex:1; justify-content:flex-end;">
           <input type="number" id="ltemp-${lid}" placeholder="" style="width:80px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none;" />
           <span style="font-size:14px; color:var(--text-muted);">°C</span>
@@ -660,13 +669,18 @@
   function formatReport() {
     const event       = document.getElementById('eventName').value.trim();
     const date        = document.getElementById('eventDateDisplay').value.trim();
-    const arrivalTime = document.getElementById('arrivalTime').value.trim();
+    const arrivalHour = document.getElementById('arrivalHour').value.trim();
+    const arrivalMin  = document.getElementById('arrivalMin').value.trim();
+    const arrivalAmPm = document.getElementById('arrivalAmPm').value;
+    const arrivalFull = arrivalHour && arrivalMin
+      ? arrivalHour + ':' + arrivalMin.padStart(2,'0') + (arrivalAmPm ? ' ' + arrivalAmPm : '')
+      : '';
     const venue       = document.getElementById('venue').value.trim();
 
     let lines = [];
     if (event)       lines.push('Event: ' + event);
     if (date)        lines.push('Date: ' + date);
-    if (arrivalTime) lines.push('Arrival Time: ' + arrivalTime);
+    if (arrivalFull)     lines.push('Arrival Time: ' + arrivalFull);
     if (venue)       lines.push('Venue: ' + venue);
     lines.push('');
 
@@ -682,7 +696,7 @@
 
       if (li > 0) lines.push('');
       lines.push('📍 *' + (zone.trim() || ('Zone ' + (li + 1))) + '*');
-      if (temp)         lines.push('Temperature: ' + temp + '°C');
+      if (temp)         lines.push('Product Temperature: ' + temp + '°C');
       if (freshKegs)    lines.push('Fresh Kegs: ' + freshKegs);
       if (internet)     lines.push('Internet: ' + internet);
       if (testPayment)  lines.push('Test Payment: ' + testPayment);
@@ -740,6 +754,14 @@
   function openClearModal() { document.getElementById('clearModal').classList.add('open'); }
   function closeClearModal() { document.getElementById('clearModal').classList.remove('open'); }
 
+  function formatArrival() {
+    const minEl = document.getElementById('arrivalMin');
+    if (minEl.value.length === 2 && parseInt(minEl.value) > 59) minEl.value = '59';
+    const hourEl = document.getElementById('arrivalHour');
+    if (parseInt(hourEl.value) > 12) hourEl.value = '12';
+    if (parseInt(hourEl.value) < 1 && hourEl.value !== '') hourEl.value = '1';
+  }
+
   function setToday() {
     const now = new Date();
     const formatted = now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
@@ -747,7 +769,8 @@
   }
 
   function clearAll() {
-    ['eventName','venue','eventDateDisplay','arrivalTime'].forEach(function(id) { document.getElementById(id).value = ''; });
+    ['eventName','venue','eventDateDisplay','arrivalHour','arrivalMin'].forEach(function(id) { document.getElementById(id).value = ''; });
+    document.getElementById('arrivalAmPm').selectedIndex = 0;
     document.getElementById('locationsList').innerHTML = '';
     locationCount = 0; machineCounters = {};
     closeClearModal();
