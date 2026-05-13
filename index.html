@@ -402,30 +402,11 @@
       <label>Event Name</label>
       <input type="text" id="eventName" />
     </div>
-    <div class="card-row" id="dateRow" style="align-items:flex-start; flex-direction:column; gap:8px; padding-bottom:14px;">
-      <label style="min-width:unset; font-size:14px; color:var(--text-muted);">Date</label>
-      <div style="display:flex; gap:8px; width:100%;">
-        <select id="eventDay" style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:14px; font-family:var(--font); padding:8px 6px; outline:none; -webkit-appearance:none; text-align:center;">
-          <option value="">Day</option>
-        </select>
-        <select id="eventMonth" style="flex:2; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:14px; font-family:var(--font); padding:8px 6px; outline:none; -webkit-appearance:none; text-align:center;">
-          <option value="">Month</option>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
-        </select>
-        <select id="eventYear" style="flex:1.5; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:14px; font-family:var(--font); padding:8px 6px; outline:none; -webkit-appearance:none; text-align:center;">
-          <option value="">Year</option>
-        </select>
+    <div class="card-row" style="flex-direction:column; align-items:flex-start; gap:10px; padding-bottom:14px;">
+      <label style="font-size:14px; color:var(--text-muted);">Date</label>
+      <div style="display:flex; gap:8px; width:100%; align-items:center;">
+        <button onclick="setToday()" style="background:var(--accent-dim); border:1px solid rgba(255,0,204,0.3); border-radius:var(--radius-sm); color:var(--accent); font-size:12px; font-weight:600; font-family:var(--font); padding:8px 14px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Today</button>
+        <input type="text" id="eventDateDisplay" placeholder="" style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:var(--font); padding:8px 10px; outline:none; min-width:0;" />
       </div>
     </div>
     <div class="card-row" style="border-bottom:none">
@@ -508,6 +489,35 @@
         <label>Zone / Area</label>
         <input type="text" id="lzone-${lid}" oninput="updateLocationLabel(${lid})" />
       </div>
+      <div class="loc-zone-row">
+        <label>Temperature</label>
+        <input type="text" id="ltemp-${lid}" placeholder="" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none;" />
+      </div>
+      <div class="loc-zone-row">
+        <label>Fresh Kegs</label>
+        <select id="lfreshKegs-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
+          <option value="" disabled selected></option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div class="loc-zone-row">
+        <label>Internet</label>
+        <select id="linternet-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
+          <option value="" disabled selected></option>
+          <option value="Wifi">Wifi</option>
+          <option value="Ethernet">Ethernet</option>
+          <option value="Hotspot">Hotspot</option>
+        </select>
+      </div>
+      <div class="loc-zone-row" style="border-bottom:none;">
+        <label>Test Payment</label>
+        <select id="ltestPayment-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
+          <option value="" disabled selected></option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
       <div class="machines-area">
         <div class="machines-sublabel">Machines</div>
         <div id="machines-${lid}"></div>
@@ -575,31 +585,6 @@
           <option value="70/30">70/30</option>
         </select>
       </div>
-      <div class="m-row">
-        <label>Fresh Kegs</label>
-        <select data-field="freshKegs">
-          <option value="" disabled selected></option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-      <div class="m-row">
-        <label>Internet</label>
-        <select data-field="internet">
-          <option value="" disabled selected></option>
-          <option value="Wifi">Wifi</option>
-          <option value="Ethernet">Ethernet</option>
-          <option value="Hotspot">Hotspot</option>
-        </select>
-      </div>
-      <div class="m-row">
-        <label>Test Payment</label>
-        <select data-field="testPayment">
-          <option value="" disabled selected></option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
       <div class="pour-row">
         <div class="pour-cell">
           <label>Tap 1</label>
@@ -662,41 +647,41 @@
 
   function formatReport() {
     const event = document.getElementById('eventName').value.trim();
-    const day   = document.getElementById('eventDay').value;
-    const month = document.getElementById('eventMonth').value;
-    const year  = document.getElementById('eventYear').value;
+    const date  = document.getElementById('eventDateDisplay').value.trim();
     const venue = document.getElementById('venue').value.trim();
 
     let lines = [];
     if (event) lines.push('Event: ' + event);
-    const dateParts = [day, month, year].filter(Boolean);
-    if (dateParts.length) lines.push('Date: ' + dateParts.join(' '));
+    if (date)  lines.push('Date: ' + date);
     if (venue) lines.push('Venue: ' + venue);
 
     const locBlocks = document.querySelectorAll('.location-block');
     locBlocks.forEach((block, li) => {
       const lid = block.id.replace('loc-', '');
-      const zone = (document.getElementById('lzone-' + lid) || {}).value || '';
-      lines.push('');
-      lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-      lines.push('Location: ' + (zone.trim() || ('Zone ' + (li + 1))));
-      lines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      const zone        = (document.getElementById('lzone-' + lid) || {}).value || '';
+      const temp        = (document.getElementById('ltemp-' + lid) || {}).value || '';
+      const freshKegs   = (document.getElementById('lfreshKegs-' + lid) || {}).value || '';
+      const internet    = (document.getElementById('linternet-' + lid) || {}).value || '';
+      const testPayment = (document.getElementById('ltestPayment-' + lid) || {}).value || '';
+
+      if (li > 0) lines.push('');
+      lines.push('📍 ' + (zone.trim() || ('Zone ' + (li + 1))));
+      if (temp)        lines.push('Temperature: ' + temp);
+      if (freshKegs)   lines.push('Fresh Kegs: ' + freshKegs);
+      if (internet)    lines.push('Internet: ' + internet);
+      if (testPayment) lines.push('Test Payment: ' + testPayment);
 
       const machineCards = block.querySelectorAll('.machine-card');
       machineCards.forEach((card, mi) => {
         const get = f => { const el = card.querySelector('[data-field="' + f + '"]'); return el ? el.value.trim() : ''; };
-        lines.push('');
         lines.push('⸻');
-        lines.push('Machine number: ' + (get('machineNumber') || ('M' + (mi + 1))));
-        if (get('product'))      lines.push('Product: ' + get('product'));
-        if (get('gasType'))      lines.push('Gas Type: ' + get('gasType'));
-        if (get('psi'))          lines.push('PSI: ' + get('psi'));
-        if (get('freshKegs'))    lines.push('Fresh Kegs: ' + get('freshKegs'));
-        if (get('internet'))     lines.push('Internet: ' + get('internet'));
-        if (get('testPayment'))  lines.push('Test Payment: ' + get('testPayment'));
-        if (get('tap1'))         lines.push('Tap 1 Pour Time: ' + get('tap1'));
-        if (get('tap2'))         lines.push('Tap 2 Pour Time: ' + get('tap2'));
-        if (get('notes'))        lines.push('Notes: ' + get('notes'));
+        lines.push('Machine: ' + (get('machineNumber') || ('M' + (mi + 1))));
+        if (get('product'))  lines.push('Product: ' + get('product'));
+        if (get('gasType'))  lines.push('Gas Type: ' + get('gasType'));
+        if (get('psi'))      lines.push('PSI: ' + get('psi'));
+        if (get('tap1'))     lines.push('Tap 1: ' + get('tap1') + 's');
+        if (get('tap2'))     lines.push('Tap 2: ' + get('tap2') + 's');
+        if (get('notes'))    lines.push('Notes: ' + get('notes'));
       });
     });
 
@@ -738,9 +723,14 @@
   function openClearModal() { document.getElementById('clearModal').classList.add('open'); }
   function closeClearModal() { document.getElementById('clearModal').classList.remove('open'); }
 
+  function setToday() {
+    const now = new Date();
+    const formatted = now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    document.getElementById('eventDateDisplay').value = formatted;
+  }
+
   function clearAll() {
-    ['eventName','venue'].forEach(function(id) { document.getElementById(id).value = ''; });
-    ['eventDay','eventMonth','eventYear'].forEach(function(id) { document.getElementById(id).selectedIndex = 0; });
+    ['eventName','venue','eventDateDisplay'].forEach(function(id) { document.getElementById(id).value = ''; });
     document.getElementById('locationsList').innerHTML = '';
     locationCount = 0; machineCounters = {};
     closeClearModal();
@@ -748,23 +738,6 @@
     updateStats();
     showToast('Template cleared');
   }
-
-  // Populate day options 1-31
-  (function() {
-    const dayEl = document.getElementById('eventDay');
-    for (var i = 1; i <= 31; i++) {
-      var opt = document.createElement('option');
-      opt.value = i; opt.textContent = i;
-      dayEl.appendChild(opt);
-    }
-    const yearEl = document.getElementById('eventYear');
-    const currentYear = new Date().getFullYear();
-    for (var y = currentYear; y <= currentYear + 3; y++) {
-      var opt = document.createElement('option');
-      opt.value = y; opt.textContent = y;
-      yearEl.appendChild(opt);
-    }
-  })();
 
   // Init with one location
   addLocation();
