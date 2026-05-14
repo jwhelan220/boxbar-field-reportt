@@ -125,6 +125,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .report-item-body pre{font-size:12px;line-height:1.8;color:var(--text-muted);white-space:pre-wrap;word-break:break-word;font-family:"SF Mono","Courier New",monospace;}
 .report-body-actions{display:flex;gap:8px;margin-top:12px;}
 .list-empty{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:14px;line-height:1.6;}
+
+.venue-option{padding:11px 14px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border);font-family:var(--font);}
+.venue-option:last-child{border-bottom:none;}
+.venue-option:active{background:var(--surface2);}
+.venue-option.no-match{color:var(--text-muted);font-style:italic;cursor:default;}
 </style>
 </head>
 <body>
@@ -175,9 +180,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
           </select>
         </div>
       </div>
-      <div class="card-row" style="border-bottom:none">
-        <label>Venue</label>
-        <input type="text" id="venue" oninput="autoSave()"/>
+      <div class="card-row" style="border-bottom:none;flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:14px;">
+        <label style="font-size:14px;color:var(--text-muted);">Venue</label>
+        <div style="width:100%;position:relative;">
+          <input type="text" id="venueInput" autocomplete="off" oninput="onVenueInput()" onfocus="showVenueDropdown()" placeholder="Type or select a venue..."
+            style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;outline:none;"/>
+          <div id="venueDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-sm);z-index:100;max-height:200px;overflow-y:auto;margin-top:4px;box-shadow:0 4px 20px rgba(0,0,0,0.4);"></div>
+        </div>
+        <div id="venueNewBanner" style="display:none;width:100%;background:var(--accent-dim);border:1px solid rgba(255,0,204,0.25);border-radius:var(--radius-sm);padding:8px 12px;font-size:12px;color:var(--accent);font-weight:600;">
+          ✨ New venue — will be added to the list on submit
+        </div>
       </div>
     </div>
   </div>
@@ -242,12 +254,73 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbymoGXxFXyIgwES9qSoB4PnYnosHAqw7OCMjpD9VdYbHpNxKTi12wNIWi29U6IpfxPDUQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyYojrqNc0GVqiAr4LNLNQEaLfMrlGd4tnIaS5pgYftu03V2TVxCgggsFJEuMRBrhneng/exec";
 const DRAFTS_KEY = "boxbar_drafts_v2";
 
 let locationCount = 0;
 let machineCounters = {};
 let autoSaveTimer = null;
+let venueList = [];
+
+// ── Venue dropdown ────────────────────────────────
+function loadVenues() {
+  fetch(SCRIPT_URL + "?action=getVenues")
+    .then(r => r.json())
+    .then(data => {
+      venueList = (data.venues || []).filter(Boolean);
+      // Restore saved venue after list loads
+      const saved = localStorage.getItem("boxbar_venue");
+      if (saved) { document.getElementById("venueInput").value = saved; checkVenueNew(); }
+    })
+    .catch(() => {
+      // Offline fallback — load from localStorage cache
+      try { venueList = JSON.parse(localStorage.getItem("boxbar_venue_cache") || "[]"); } catch(e) {}
+    });
+}
+
+function getVenue() { return document.getElementById("venueInput").value.trim(); }
+
+function onVenueInput() {
+  autoSave();
+  checkVenueNew();
+  showVenueDropdown();
+}
+
+function checkVenueNew() {
+  const val = getVenue();
+  const isNew = val && !venueList.map(v=>v.toLowerCase()).includes(val.toLowerCase());
+  document.getElementById("venueNewBanner").style.display = isNew ? "" : "none";
+}
+
+function showVenueDropdown() {
+  const val = getVenue().toLowerCase();
+  const dd  = document.getElementById("venueDropdown");
+  const filtered = val
+    ? venueList.filter(v => v.toLowerCase().includes(val))
+    : venueList;
+  if (!filtered.length) { dd.style.display = "none"; return; }
+  dd.innerHTML = filtered.map(v =>
+    `<div class="venue-option" onclick="selectVenue('${v.replace(/'/g, "\\'")}')">${v}</div>`
+  ).join("");
+  dd.style.display = "";
+}
+
+function selectVenue(name) {
+  document.getElementById("venueInput").value = name;
+  document.getElementById("venueDropdown").style.display = "none";
+  document.getElementById("venueNewBanner").style.display = "none";
+  autoSave();
+}
+
+function hideVenueDropdown() {
+  setTimeout(() => { document.getElementById("venueDropdown").style.display = "none"; }, 200);
+}
+
+document.addEventListener("click", e => {
+  if (!e.target.closest("#venueInput") && !e.target.closest("#venueDropdown")) {
+    document.getElementById("venueDropdown").style.display = "none";
+  }
+});
 
 // ── Main nav ──────────────────────────────────────
 function switchMain(view) {
@@ -408,7 +481,7 @@ function collectState() {
     arrivalHour: document.getElementById("arrivalHour").value,
     arrivalMin: document.getElementById("arrivalMin").value,
     arrivalAmPm: document.getElementById("arrivalAmPm").value,
-    venue: document.getElementById("venue").value,
+    venue: getVenue(),
     locationCount, machineCounters, locs,
     savedAt: new Date().toLocaleString("en-GB")
   };
@@ -419,7 +492,7 @@ function restoreState(data) {
   sv("eventName",data.eventName); sv("eventDateDisplay",data.date);
   sv("arrivalHour",data.arrivalHour); sv("arrivalMin",data.arrivalMin);
   const amPm=document.getElementById("arrivalAmPm"); if(amPm&&data.arrivalAmPm) amPm.value=data.arrivalAmPm;
-  sv("venue",data.venue);
+  const venueEl=document.getElementById("venueInput"); if(venueEl) venueEl.value=data.venue||"";
   locationCount=data.locationCount||0; machineCounters=data.machineCounters||{};
   (data.locs||[]).forEach(loc => {
     const lid=parseInt(loc.lid);
@@ -600,12 +673,23 @@ function confirmSubmit() {
     });
   });
   showToast("Submitting...");
+  const venue = data.venue || "Unknown Venue";
+  const isNewVenue = venue && !venueList.map(v=>v.toLowerCase()).includes(venue.toLowerCase());
   fetch(SCRIPT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ venueName: data.venue||"Unknown Venue", rows })
-  }).then(()=>{ showToast("Report submitted! ✓"); localStorage.removeItem("boxbar_current"); })
-    .catch(()=>{ showToast("Submitted!"); });
+    body: JSON.stringify({ venueName: venue, isNewVenue, rows })
+  }).then(()=>{
+    showToast("Report submitted! ✓");
+    localStorage.removeItem("boxbar_current");
+    // Add new venue to local list and cache immediately
+    if (isNewVenue) {
+      venueList.push(venue);
+      venueList.sort();
+      try { localStorage.setItem("boxbar_venue_cache", JSON.stringify(venueList)); } catch(e) {}
+      document.getElementById("venueNewBanner").style.display = "none";
+    }
+  }).catch(()=>{ showToast("Submitted!"); });
 }
 
 // ── Utilities ─────────────────────────────────────
@@ -641,8 +725,9 @@ function closeClearModal() { document.getElementById("clearModal").classList.rem
 function clearAll() {
   document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(p=>p.remove());
   document.querySelectorAll(".tab-btn[id^='tab-loc-']").forEach(b=>b.remove());
-  ["eventName","venue","eventDateDisplay","arrivalHour","arrivalMin"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  ["eventName","eventDateDisplay","arrivalHour","arrivalMin","venueInput"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
   document.getElementById("arrivalAmPm").value="";
+  document.getElementById("venueNewBanner").style.display="none";
   locationCount=0; machineCounters={};
   closeClearModal(); localStorage.removeItem("boxbar_current");
   switchTab("event"); addLocation(); showToast("Report cleared");
@@ -662,6 +747,7 @@ function setToday() {
 }
 
 // ── Init ──────────────────────────────────────────
+loadVenues();
 if (!loadCurrent()) { addLocation(); }
 </script>
 </body>
