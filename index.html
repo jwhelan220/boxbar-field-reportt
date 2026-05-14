@@ -182,14 +182,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
       </div>
       <div class="card-row" style="border-bottom:none;flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:14px;">
         <label style="font-size:14px;color:var(--text-muted);">Venue</label>
-        <div style="width:100%;position:relative;">
-          <input type="text" id="venueInput" autocomplete="off" oninput="onVenueInput()" onfocus="showVenueDropdown()" placeholder="Type or select a venue..."
-            style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;outline:none;"/>
-          <div id="venueDropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-sm);z-index:100;max-height:200px;overflow-y:auto;margin-top:4px;box-shadow:0 4px 20px rgba(0,0,0,0.4);"></div>
-        </div>
-        <div id="venueNewBanner" style="display:none;width:100%;background:var(--accent-dim);border:1px solid rgba(255,0,204,0.25);border-radius:var(--radius-sm);padding:8px 12px;font-size:12px;color:var(--accent);font-weight:600;">
-          ✨ New venue — will be added to the list on submit
-        </div>
+        <select id="venueInput" onchange="onVenueSelect()" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:10px 10px;outline:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">— Select a venue —</option>
+        </select>
+        <button onclick="openNewVenueModal()" style="width:100%;padding:10px;background:var(--accent-dim);border:1px dashed rgba(255,0,204,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;text-align:center;">
+          + Add New Venue
+        </button>
       </div>
     </div>
   </div>
@@ -237,6 +235,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
 </div>
 
+<!-- New venue modal -->
+<div class="modal-bg" id="newVenueModal">
+  <div class="modal">
+    <h3>Add New Venue</h3>
+    <p>Enter the venue name. It will be saved to the list and available for all technicians.</p>
+    <input type="text" id="newVenueName" placeholder="e.g. Wembley Stadium"
+      style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:15px;font-family:var(--font);padding:12px;outline:none;margin-bottom:16px;"/>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" style="flex:1" onclick="closeNewVenueModal()">Cancel</button>
+      <button class="btn btn-primary"   style="flex:1" onclick="confirmNewVenue()">Add Venue</button>
+    </div>
+  </div>
+</div>
+
 <!-- Preview modal -->
 <div class="preview-modal" id="previewModal">
   <div class="preview-header">
@@ -254,7 +266,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4TOYoR-0JOGynOEUS3ief-jH2vl6A2xcy7Dyrs5XMauXUE2cMw1TNiOEZ8x88b9s6gQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzh6D8vVIX0m-fBSwrhYkvguKF3fTT-11C9eerF7vSC5Uj4JuL4fdV-cZWmLZ8cwqZ5mA/exec";
 const DRAFTS_KEY = "boxbar_drafts_v2";
 
 let locationCount = 0;
@@ -267,60 +279,74 @@ function loadVenues() {
   fetch(SCRIPT_URL + "?action=getVenues")
     .then(r => r.json())
     .then(data => {
-      venueList = (data.venues || []).filter(Boolean);
-      // Restore saved venue after list loads
-      const saved = localStorage.getItem("boxbar_venue");
-      if (saved) { document.getElementById("venueInput").value = saved; checkVenueNew(); }
+      venueList = (data.venues || []).filter(Boolean).sort();
+      try { localStorage.setItem("boxbar_venue_cache", JSON.stringify(venueList)); } catch(e) {}
+      populateVenueSelect();
+      // Restore saved selection
+      const saved = localStorage.getItem("boxbar_venue_selected");
+      if (saved) { const el = document.getElementById("venueInput"); if (el) el.value = saved; }
     })
     .catch(() => {
-      // Offline fallback — load from localStorage cache
       try { venueList = JSON.parse(localStorage.getItem("boxbar_venue_cache") || "[]"); } catch(e) {}
+      populateVenueSelect();
     });
 }
 
-function getVenue() { return document.getElementById("venueInput").value.trim(); }
-
-function onVenueInput() {
-  autoSave();
-  checkVenueNew();
-  showVenueDropdown();
+function populateVenueSelect(selectedVenue) {
+  const sel = document.getElementById("venueInput");
+  if (!sel) return;
+  const current = selectedVenue || sel.value;
+  sel.innerHTML = '<option value="">— Select a venue —</option>';
+  venueList.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v; opt.textContent = v;
+    if (v === current) opt.selected = true;
+    sel.appendChild(opt);
+  });
 }
 
-function checkVenueNew() {
-  const val = getVenue();
-  const isNew = val && !venueList.map(v=>v.toLowerCase()).includes(val.toLowerCase());
-  document.getElementById("venueNewBanner").style.display = isNew ? "" : "none";
+function getVenue() {
+  const el = document.getElementById("venueInput");
+  return el ? el.value.trim() : "";
 }
 
-function showVenueDropdown() {
-  const val = getVenue().toLowerCase();
-  const dd  = document.getElementById("venueDropdown");
-  const filtered = val
-    ? venueList.filter(v => v.toLowerCase().includes(val))
-    : venueList;
-  if (!filtered.length) { dd.style.display = "none"; return; }
-  dd.innerHTML = filtered.map(v =>
-    `<div class="venue-option" onclick="selectVenue('${v.replace(/'/g, "\\'")}')">${v}</div>`
-  ).join("");
-  dd.style.display = "";
+function onVenueSelect() { autoSave(); }
+
+function openNewVenueModal() {
+  document.getElementById("newVenueName").value = "";
+  document.getElementById("newVenueModal").classList.add("open");
+  setTimeout(() => document.getElementById("newVenueName").focus(), 300);
 }
 
-function selectVenue(name) {
-  document.getElementById("venueInput").value = name;
-  document.getElementById("venueDropdown").style.display = "none";
-  document.getElementById("venueNewBanner").style.display = "none";
-  autoSave();
+function closeNewVenueModal() {
+  document.getElementById("newVenueModal").classList.remove("open");
 }
 
-function hideVenueDropdown() {
-  setTimeout(() => { document.getElementById("venueDropdown").style.display = "none"; }, 200);
-}
-
-document.addEventListener("click", e => {
-  if (!e.target.closest("#venueInput") && !e.target.closest("#venueDropdown")) {
-    document.getElementById("venueDropdown").style.display = "none";
+function confirmNewVenue() {
+  const name = document.getElementById("newVenueName").value.trim();
+  if (!name) { showToast("Please enter a venue name", false); return; }
+  if (venueList.map(v=>v.toLowerCase()).includes(name.toLowerCase())) {
+    showToast("Venue already exists", false);
+    closeNewVenueModal();
+    document.getElementById("venueInput").value = venueList.find(v => v.toLowerCase() === name.toLowerCase());
+    autoSave(); return;
   }
-});
+  // Add locally and select it
+  venueList.push(name);
+  venueList.sort();
+  try { localStorage.setItem("boxbar_venue_cache", JSON.stringify(venueList)); } catch(e) {}
+  populateVenueSelect(name);
+  document.getElementById("venueInput").value = name;
+  closeNewVenueModal();
+  autoSave();
+  showToast("Venue added — will save on submit");
+  // Send to sheet immediately
+  fetch(SCRIPT_URL, {
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ addVenueOnly: true, venueName: name })
+  }).catch(()=>{});
+}
 
 // ── Main nav ──────────────────────────────────────
 function switchMain(view) {
@@ -492,7 +518,7 @@ function restoreState(data) {
   sv("eventName",data.eventName); sv("eventDateDisplay",data.date);
   sv("arrivalHour",data.arrivalHour); sv("arrivalMin",data.arrivalMin);
   const amPm=document.getElementById("arrivalAmPm"); if(amPm&&data.arrivalAmPm) amPm.value=data.arrivalAmPm;
-  const venueEl=document.getElementById("venueInput"); if(venueEl) venueEl.value=data.venue||"";
+  const venueEl=document.getElementById("venueInput"); if(venueEl && data.venue) venueEl.value=data.venue;
   locationCount=data.locationCount||0; machineCounters=data.machineCounters||{};
   (data.locs||[]).forEach(loc => {
     const lid=parseInt(loc.lid);
@@ -674,21 +700,13 @@ function confirmSubmit() {
   });
   showToast("Submitting...");
   const venue = data.venue || "Unknown Venue";
-  const isNewVenue = venue && !venueList.map(v=>v.toLowerCase()).includes(venue.toLowerCase());
   fetch(SCRIPT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ venueName: venue, isNewVenue, rows })
+    body: JSON.stringify({ venueName: venue, rows })
   }).then(()=>{
     showToast("Report submitted! ✓");
     localStorage.removeItem("boxbar_current");
-    // Add new venue to local list and cache immediately
-    if (isNewVenue) {
-      venueList.push(venue);
-      venueList.sort();
-      try { localStorage.setItem("boxbar_venue_cache", JSON.stringify(venueList)); } catch(e) {}
-      document.getElementById("venueNewBanner").style.display = "none";
-    }
   }).catch(()=>{ showToast("Submitted!"); });
 }
 
@@ -725,9 +743,9 @@ function closeClearModal() { document.getElementById("clearModal").classList.rem
 function clearAll() {
   document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(p=>p.remove());
   document.querySelectorAll(".tab-btn[id^='tab-loc-']").forEach(b=>b.remove());
-  ["eventName","eventDateDisplay","arrivalHour","arrivalMin","venueInput"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  ["eventName","eventDateDisplay","arrivalHour","arrivalMin"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
   document.getElementById("arrivalAmPm").value="";
-  document.getElementById("venueNewBanner").style.display="none";
+  document.getElementById("venueInput").value="";
   locationCount=0; machineCounters={};
   closeClearModal(); localStorage.removeItem("boxbar_current");
   switchTab("event"); addLocation(); showToast("Report cleared");
