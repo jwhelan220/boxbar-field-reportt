@@ -16,61 +16,51 @@
   --text:#f0f2f5;--text-muted:#8a9099;--text-dim:#555c66;
   --danger:#ff5c5c;--danger-dim:rgba(255,92,92,0.1);
   --green:#00c896;--green-dim:rgba(0,200,150,0.12);
+  --yellow:#f5a623;--yellow-dim:rgba(245,166,35,0.12);
   --radius:14px;--radius-sm:8px;
   --font:-apple-system,"SF Pro Display",BlinkMacSystemFont,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;padding-bottom:90px;}
 
-/* Header */
 .app-header{position:sticky;top:0;z-index:50;background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
 .app-title span:first-child{display:block;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);}
 .app-title span:last-child{display:block;font-size:20px;font-weight:700;color:var(--text);line-height:1.1;}
 .header-right{display:flex;align-items:center;gap:10px;}
-.draft-badge{font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(255,0,204,0.25);border-radius:100px;padding:4px 10px;}
 .header-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.82)}}
 
-/* Main nav */
 .main-nav{display:flex;background:var(--surface2);border-bottom:1px solid var(--border);position:sticky;top:57px;z-index:40;}
-.main-nav-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;background:none;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;}
+.main-nav-btn{flex:1;padding:11px 4px;font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;background:none;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;}
 .main-nav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-/* Tab bar */
 .tab-bar{display:flex;overflow-x:auto;gap:6px;padding:12px 16px 0;scrollbar-width:none;-ms-overflow-style:none;border-bottom:1px solid var(--border);background:var(--bg);}
 .tab-bar::-webkit-scrollbar{display:none;}
 .tab-btn{flex-shrink:0;padding:8px 16px;border-radius:100px 100px 0 0;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);border-bottom:none;background:var(--surface2);color:var(--text-muted);transition:all 0.15s;white-space:nowrap;}
 .tab-btn.active{background:var(--surface);color:var(--accent);border-color:rgba(255,0,204,0.3);}
 .add-tab-btn{flex-shrink:0;padding:8px 14px;border-radius:100px 100px 0 0;font-size:18px;line-height:1;cursor:pointer;border:1px dashed rgba(255,0,204,0.3);border-bottom:none;background:var(--accent-dim);color:var(--accent);font-family:var(--font);}
-
-/* Tab panels */
 .tab-panel{display:none;padding:16px;}
 .tab-panel.active{display:block;}
 
-/* Cards */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;}
 .card-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;}
 .card-row:last-child{border-bottom:none;}
 .card-row label{font-size:14px;color:var(--text-muted);min-width:110px;flex-shrink:0;}
 .card-row input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;min-width:0;-webkit-appearance:none;}
 
-/* Location fields */
 .loc-zone-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;}
 .loc-zone-row label{font-size:14px;color:var(--text-muted);min-width:130px;flex-shrink:0;}
 .loc-zone-row input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;min-width:0;-webkit-appearance:none;}
 .loc-zone-row select{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;-webkit-appearance:none;cursor:pointer;}
 .loc-zone-row select option{background:#1e2329;color:var(--text);}
 
-/* Section label */
 .section-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;padding-left:4px;}
 
-/* Apply All */
 .apply-all-bar{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .apply-all-bar label{font-size:12px;color:var(--text-muted);flex-shrink:0;}
 .apply-all-bar input{background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);padding:6px 10px;outline:none;flex:1;min-width:80px;}
 .apply-all-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;font-family:var(--font);padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 
-/* Machine card */
 .machine-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;animation:slideIn 0.2s ease;}
 @keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .machine-header{background:var(--surface2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
@@ -93,36 +83,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .notes-row label{display:block;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;}
 .notes-row textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:9px 11px;resize:none;min-height:64px;outline:none;line-height:1.5;}
 
-/* Add buttons */
 .add-machine-btn{width:100%;padding:11px;background:var(--accent-dim);border:1px dashed rgba(255,0,204,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:4px;}
 .add-machine-btn:active{background:var(--accent-dim2);}
 
-/* Bottom bar */
-.btn-row{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:8px;}
-.btn{flex:1;padding:13px 8px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;transition:opacity 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:4px;}
+.btn-row{position:fixed;bottom:0;left:0;right:0;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:7px;}
+.btn{flex:1;padding:12px 6px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;transition:opacity 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:3px;}
 .btn:active{opacity:0.8;transform:scale(0.97);}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border-strong);}
 .btn-danger{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(255,92,92,0.2);}
-.btn-save{background:rgba(255,0,204,0.15);color:var(--accent);border:1px solid rgba(255,0,204,0.3);}
+.btn-save{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,166,35,0.3);}
 .btn-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,200,150,0.3);}
 
-/* Toast */
 .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-10px);background:var(--surface2);border:1px solid var(--border-strong);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text);opacity:0;pointer-events:none;transition:opacity 0.25s,transform 0.25s;white-space:nowrap;z-index:999;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.success{color:var(--accent);border-color:rgba(255,0,204,0.35);}
 .toast.green{color:var(--green);border-color:rgba(0,200,150,0.35);}
 
-/* Modals */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:flex-end;justify-content:center;}
 .modal-bg.open{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border-strong);border-radius:20px 20px 0 0;padding:20px;padding-bottom:max(24px,env(safe-area-inset-bottom));width:100%;max-width:480px;}
 .modal h3{font-size:17px;font-weight:700;margin-bottom:8px;}
 .modal p{font-size:14px;color:var(--text-muted);margin-bottom:20px;line-height:1.5;}
 .modal-actions{display:flex;gap:10px;}
-.modal input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:20px;font-family:var(--font);padding:12px;outline:none;text-align:center;letter-spacing:0.3em;margin-bottom:16px;}
 
-/* Preview */
 .preview-modal{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;padding:20px 16px 110px;}
 .preview-modal.open{display:block;}
 .preview-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
@@ -131,26 +115,26 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .preview-text{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;font-family:"SF Mono","Courier New",monospace;}
 .preview-actions{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:10px;}
 
-/* Reports view */
-.reports-view{padding:16px;}
-.report-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;cursor:pointer;}
-.report-item-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+/* Drafts & Reports shared list styles */
+.report-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+.report-item-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
 .report-item-title{font-size:14px;font-weight:600;color:var(--text);}
 .report-item-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
-.report-item-chevron{color:var(--text-dim);font-size:18px;transition:transform 0.2s;}
-.report-item.open .report-item-chevron{transform:rotate(90deg);}
+.report-chevron{color:var(--text-dim);font-size:18px;transition:transform 0.2s;flex-shrink:0;margin-left:8px;}
+.report-item.open .report-chevron{transform:rotate(90deg);}
 .report-item-body{display:none;padding:14px 16px;border-top:1px solid var(--border);}
 .report-item.open .report-item-body{display:block;}
 .report-item-body pre{font-size:12px;line-height:1.8;color:var(--text-muted);white-space:pre-wrap;word-break:break-word;font-family:"SF Mono","Courier New",monospace;}
-.reports-empty{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:14px;}
-.reports-loading{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:14px;}
+.report-body-actions{display:flex;gap:8px;margin-top:12px;}
+.list-empty{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:14px;line-height:1.6;}
+.list-loading{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:14px;}
 
-/* PIN screen */
-.pin-screen{padding:40px 20px;text-align:center;}
+/* PIN */
+.pin-screen{padding:50px 20px;text-align:center;}
 .pin-screen h2{font-size:20px;font-weight:700;margin-bottom:8px;}
 .pin-screen p{font-size:14px;color:var(--text-muted);margin-bottom:24px;}
-.pin-screen input{width:100%;max-width:200px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:28px;font-family:var(--font);padding:14px;outline:none;text-align:center;letter-spacing:0.5em;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;}
-.pin-error{color:var(--danger);font-size:13px;margin-top:-8px;margin-bottom:12px;}
+.pin-input{width:100%;max-width:180px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:28px;font-family:var(--font);padding:14px;outline:none;text-align:center;letter-spacing:0.5em;display:block;margin:0 auto 12px;}
+.pin-error{color:var(--danger);font-size:13px;margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -161,74 +145,75 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
     <span>Field Report</span>
   </div>
   <div class="header-right">
-    <span class="draft-badge" id="draftBadge" style="display:none">Draft saved</span>
     <div class="header-dot"></div>
   </div>
 </div>
 
-<!-- Main nav: Report / Reports -->
 <div class="main-nav">
-  <button class="main-nav-btn active" id="mainnav-report" onclick="switchMainNav('report')">📋 Report</button>
-  <button class="main-nav-btn" id="mainnav-reports" onclick="switchMainNav('reports')">📊 Reports</button>
+  <button class="main-nav-btn active" id="mn-report"  onclick="switchMain('report')">📋 Report</button>
+  <button class="main-nav-btn"        id="mn-drafts"  onclick="switchMain('drafts')">💾 Drafts</button>
+  <button class="main-nav-btn"        id="mn-reports" onclick="switchMain('reports')">📊 Reports</button>
 </div>
 
-<!-- ══ REPORT SECTION ══ -->
+<!-- ══ REPORT ══ -->
 <div id="main-report">
-  <!-- Tab bar -->
   <div class="tab-bar" id="tabBar">
     <button class="tab-btn active" id="tab-event" onclick="switchTab('event')">📋 Event</button>
-    <button class="add-tab-btn" onclick="addLocation()" title="Add location">+</button>
+    <button class="add-tab-btn" onclick="addLocation()">+</button>
   </div>
-
-  <!-- Event tab panel -->
   <div class="tab-panel active" id="panel-event">
     <div class="section-label">Event Details</div>
     <div class="card">
       <div class="card-row">
         <label>Event Name</label>
-        <input type="text" id="eventName" oninput="saveDraft()"/>
+        <input type="text" id="eventName" oninput="autoSave()"/>
       </div>
       <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:10px;padding-bottom:14px;">
         <label style="font-size:14px;color:var(--text-muted);">Date</label>
         <div style="display:flex;gap:8px;width:100%;align-items:center;">
           <button onclick="setToday()" style="background:var(--accent-dim);border:1px solid rgba(255,0,204,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:12px;font-weight:600;font-family:var(--font);padding:8px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">Today</button>
-          <input type="text" id="eventDateDisplay" placeholder="" oninput="saveDraft()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;outline:none;min-width:0;"/>
+          <input type="text" id="eventDateDisplay" oninput="autoSave()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;outline:none;min-width:0;"/>
         </div>
       </div>
       <div class="card-row">
         <label>Arrival Time</label>
         <div style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
-          <input type="number" id="arrivalHour" min="1" max="12" placeholder="HH" oninput="formatArrival();saveDraft()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
+          <input type="number" id="arrivalHour" min="1" max="12" placeholder="HH" oninput="formatArrival();autoSave()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
           <span style="color:var(--text-muted);font-size:16px;font-weight:600;">:</span>
-          <input type="number" id="arrivalMin" min="0" max="59" placeholder="MM" oninput="formatArrival();saveDraft()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
-          <select id="arrivalAmPm" onchange="saveDraft()" style="background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);-webkit-appearance:none;cursor:pointer;margin-left:4px;">
-            <option value="">--</option>
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
+          <input type="number" id="arrivalMin" min="0" max="59" placeholder="MM" oninput="formatArrival();autoSave()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
+          <select id="arrivalAmPm" onchange="autoSave()" style="background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);-webkit-appearance:none;cursor:pointer;margin-left:4px;">
+            <option value="">--</option><option value="AM">AM</option><option value="PM">PM</option>
           </select>
         </div>
       </div>
       <div class="card-row" style="border-bottom:none">
         <label>Venue</label>
-        <input type="text" id="venue" oninput="saveDraft()"/>
+        <input type="text" id="venue" oninput="autoSave()"/>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ REPORTS SECTION ══ -->
-<div id="main-reports" style="display:none">
-  <!-- PIN screen -->
+<!-- ══ DRAFTS ══ -->
+<div id="main-drafts" style="display:none;padding:16px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <div class="section-label" style="margin:0">Saved Drafts</div>
+    <button onclick="clearAllDrafts()" style="background:none;border:none;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);">Clear all</button>
+  </div>
+  <div id="draftsList"></div>
+</div>
+
+<!-- ══ REPORTS ══ -->
+<div id="main-reports" style="display:none;">
   <div class="pin-screen" id="pinScreen">
     <h2>Team Reports</h2>
     <p>Enter your team PIN to view submitted reports</p>
-    <input type="password" id="pinInput" maxlength="6" placeholder="••••" oninput="checkPin()"/>
-    <div class="pin-error" id="pinError" style="display:none">Incorrect PIN. Try again.</div>
-    <button class="btn btn-primary" style="max-width:200px;margin:0 auto;" onclick="checkPin()">View Reports</button>
+    <input class="pin-input" type="password" id="pinInput" maxlength="6" placeholder="••••" oninput="checkPin()"/>
+    <div class="pin-error" id="pinError" style="display:none">Incorrect PIN</div>
+    <button class="btn btn-primary" style="max-width:180px;margin:0 auto;" onclick="checkPin()">View Reports</button>
   </div>
-  <!-- Reports list (shown after PIN) -->
-  <div class="reports-view" id="reportsView" style="display:none">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+  <div id="reportsView" style="display:none;padding:16px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
       <div class="section-label" style="margin:0">Submitted Reports</div>
       <button onclick="loadReports()" style="background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);">↻ Refresh</button>
     </div>
@@ -236,72 +221,77 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
 </div>
 
-<!-- Bottom buttons -->
+<!-- Bottom bar -->
 <div class="btn-row" id="reportBtnRow">
   <button class="btn btn-danger" onclick="openClearModal()" style="flex:0.5;">🗑</button>
-  <button class="btn btn-save" onclick="saveDraft(true)">💾 Save</button>
-  <button class="btn btn-secondary" onclick="previewReport()">👁 Preview</button>
-  <button class="btn btn-primary" onclick="copyReport()">📋 Copy</button>
-  <button class="btn btn-green" onclick="submitReport()">↑ Submit</button>
+  <button class="btn btn-save"   onclick="saveDraft()">💾 Save</button>
+  <button class="btn btn-secondary" onclick="previewReport()">👁</button>
+  <button class="btn btn-primary"   onclick="copyReport()">📋 Copy</button>
+  <button class="btn btn-green"     onclick="openSubmitModal()">↑ Submit</button>
 </div>
 
-<!-- Clear Modal -->
+<!-- Clear modal -->
 <div class="modal-bg" id="clearModal">
   <div class="modal">
-    <h3>Clear template?</h3>
-    <p>This will reset all event details and location data. This cannot be undone.</p>
+    <h3>Clear report?</h3>
+    <p>This resets all event details and locations. Cannot be undone.</p>
     <div class="modal-actions">
       <button class="btn btn-secondary" style="flex:1" onclick="closeClearModal()">Cancel</button>
-      <button class="btn btn-danger" style="flex:1" onclick="clearAll()">Yes, clear</button>
+      <button class="btn btn-danger"    style="flex:1" onclick="clearAll()">Yes, clear</button>
     </div>
   </div>
 </div>
 
-<!-- Submit confirm modal -->
+<!-- Submit modal -->
 <div class="modal-bg" id="submitModal">
   <div class="modal">
     <h3>Submit report?</h3>
-    <p>This will send the completed report to the Boxbar team Google Sheet. You can still copy it to clipboard too.</p>
+    <p>This sends the completed report to the Boxbar Google Sheet for the team to view.</p>
     <div class="modal-actions">
       <button class="btn btn-secondary" style="flex:1" onclick="closeSubmitModal()">Cancel</button>
-      <button class="btn btn-green" style="flex:1" onclick="confirmSubmit()">Submit</button>
+      <button class="btn btn-green"     style="flex:1" onclick="confirmSubmit()">Submit</button>
     </div>
   </div>
 </div>
 
-<!-- Preview Modal -->
+<!-- Preview modal -->
 <div class="preview-modal" id="previewModal">
   <div class="preview-header">
-    <h2>Report Preview</h2>
+    <h2>Preview</h2>
     <button class="preview-close" onclick="closePreview()">Done</button>
   </div>
   <pre class="preview-text" id="previewText"></pre>
   <div class="preview-actions">
     <button class="btn btn-secondary" onclick="closePreview()">Back</button>
-    <button class="btn btn-primary" onclick="copyFromPreview()">📋 Copy</button>
-    <button class="btn btn-green" onclick="closePreview();submitReport()">↑ Submit</button>
+    <button class="btn btn-primary"   onclick="copyFromPreview()">📋 Copy</button>
+    <button class="btn btn-green"     onclick="closePreview();openSubmitModal()">↑ Submit</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2NT_ijFIRsuTkp4ua9CtEkqEZeBwIc99lJlXHy4OdbYAObBOj3X3s0xpTO2vphUmWFg/exec";
-const TEAM_PIN   = "3105";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPuAZQFsckCywfY-KJj2sCJdaDgfsSr3v4eOu3ep_Q3aEfmwfRtBgthGStPS4hpawPIg/exec";
+const TEAM_PIN   = "1234";
+const DRAFTS_KEY = "boxbar_drafts_v2";
 
 let locationCount = 0;
 let machineCounters = {};
 let activeTab = "event";
-let draftTimer = null;
+let autoSaveTimer = null;
 let pinUnlocked = false;
 
 // ── Main nav ──────────────────────────────────────
-function switchMainNav(view) {
-  document.getElementById("main-report").style.display  = view === "report"  ? "" : "none";
-  document.getElementById("main-reports").style.display = view === "reports" ? "" : "none";
-  document.getElementById("reportBtnRow").style.display  = view === "report"  ? "" : "none";
-  document.getElementById("mainnav-report").classList.toggle("active",  view === "report");
-  document.getElementById("mainnav-reports").classList.toggle("active", view === "reports");
+function switchMain(view) {
+  ["report","drafts","reports"].forEach(v => {
+    const el = document.getElementById("main-" + v);
+    if (el) el.style.display = v === view ? "" : "none";
+  });
+  ["mn-report","mn-drafts","mn-reports"].forEach(id => {
+    document.getElementById(id).classList.toggle("active", id === "mn-" + view);
+  });
+  document.getElementById("reportBtnRow").style.display = view === "report" ? "" : "none";
+  if (view === "drafts")  renderDrafts();
   if (view === "reports" && pinUnlocked) loadReports();
 }
 
@@ -329,32 +319,7 @@ function switchTab(id) {
   activeTab = id;
 }
 
-// ── Locations ─────────────────────────────────────
-function addLocation() {
-  locationCount++;
-  const lid = locationCount;
-  machineCounters[lid] = 0;
-
-  const tabBar = document.getElementById("tabBar");
-  const addBtn = tabBar.querySelector(".add-tab-btn");
-  const tabBtn = document.createElement("button");
-  tabBtn.className = "tab-btn";
-  tabBtn.id = "tab-loc-" + lid;
-  tabBtn.onclick = () => switchTab("loc-" + lid);
-  tabBtn.textContent = "📍 Loc " + lid;
-  tabBar.insertBefore(tabBtn, addBtn);
-
-  const panel = document.createElement("div");
-  panel.className = "tab-panel";
-  panel.id = "panel-loc-" + lid;
-  panel.innerHTML = buildLocationHTML(lid);
-  document.getElementById("main-report").appendChild(panel);
-
-  addMachine(lid); addMachine(lid); addMachine(lid);
-  switchTab("loc-" + lid);
-  saveDraft();
-}
-
+// ── Location ──────────────────────────────────────
 function buildLocationHTML(lid) {
   return `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
@@ -362,25 +327,25 @@ function buildLocationHTML(lid) {
       <button class="btn btn-danger" style="flex:none;padding:6px 12px;font-size:12px;" onclick="removeLocation(${lid})">Remove</button>
     </div>
     <div class="card" style="margin-bottom:12px;">
-      <div class="loc-zone-row"><label>Zone / Area</label><input type="text" id="lzone-${lid}" oninput="updateTabLabel(${lid});saveDraft()"/></div>
+      <div class="loc-zone-row"><label>Zone / Area</label><input type="text" id="lzone-${lid}" oninput="updateTabLabel(${lid});autoSave()"/></div>
       <div class="loc-zone-row"><label>Product Temperature</label>
         <div style="display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end;">
-          <input type="number" id="ltemp-${lid}" oninput="saveDraft()" style="width:80px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;-webkit-appearance:none;"/>
+          <input type="number" id="ltemp-${lid}" oninput="autoSave()" style="width:80px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;-webkit-appearance:none;"/>
           <span style="font-size:14px;color:var(--text-muted);">°C</span>
         </div>
       </div>
-      <div class="loc-zone-row"><label>Fresh Kegs</label><select id="lfreshKegs-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
-      <div class="loc-zone-row"><label>Internet</label><select id="linternet-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Wifi">Wifi</option><option value="Ethernet">Ethernet</option><option value="Hotspot">Hotspot</option></select></div>
-      <div class="loc-zone-row"><label>Test Payment</label><select id="ltestPayment-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+      <div class="loc-zone-row"><label>Fresh Kegs</label><select id="lfreshKegs-${lid}" onchange="autoSave()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+      <div class="loc-zone-row"><label>Internet</label><select id="linternet-${lid}" onchange="autoSave()"><option value="">—</option><option value="Wifi">Wifi</option><option value="Ethernet">Ethernet</option><option value="Hotspot">Hotspot</option></select></div>
+      <div class="loc-zone-row"><label>Test Payment</label><select id="ltestPayment-${lid}" onchange="autoSave()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
       <div class="loc-zone-row" style="border-bottom:none;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
         <label>Staff Trained</label>
-        <textarea id="lstaffTrained-${lid}" rows="2" oninput="saveDraft()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;resize:none;outline:none;line-height:1.5;text-align:left;"></textarea>
+        <textarea id="lstaffTrained-${lid}" rows="2" oninput="autoSave()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;resize:none;outline:none;line-height:1.5;text-align:left;"></textarea>
       </div>
     </div>
     <div class="section-label">Apply to All Machines</div>
     <div class="apply-all-bar">
-      <label>Product</label><input type="text" id="applyProduct-${lid}" placeholder=""/>
-      <label>PSI</label><input type="number" id="applyPsi-${lid}" placeholder="" style="max-width:70px;"/>
+      <label>Product</label><input type="text" id="applyProduct-${lid}"/>
+      <label>PSI</label><input type="number" id="applyPsi-${lid}" style="max-width:70px;"/>
       <button class="apply-all-btn" onclick="applyAll(${lid})">Apply All</button>
     </div>
     <div class="section-label">Machines</div>
@@ -389,11 +354,30 @@ function buildLocationHTML(lid) {
   `;
 }
 
+function addLocation() {
+  locationCount++;
+  const lid = locationCount;
+  machineCounters[lid] = 0;
+  const tabBar = document.getElementById("tabBar");
+  const addBtn = tabBar.querySelector(".add-tab-btn");
+  const tabBtn = document.createElement("button");
+  tabBtn.className = "tab-btn"; tabBtn.id = "tab-loc-" + lid;
+  tabBtn.onclick = () => switchTab("loc-" + lid);
+  tabBtn.textContent = "📍 Loc " + lid;
+  tabBar.insertBefore(tabBtn, addBtn);
+  const panel = document.createElement("div");
+  panel.className = "tab-panel"; panel.id = "panel-loc-" + lid;
+  panel.innerHTML = buildLocationHTML(lid);
+  document.getElementById("main-report").appendChild(panel);
+  addMachine(lid); addMachine(lid); addMachine(lid);
+  switchTab("loc-" + lid);
+  autoSave();
+}
+
 function removeLocation(lid) {
   document.getElementById("panel-loc-" + lid)?.remove();
   document.getElementById("tab-loc-" + lid)?.remove();
-  switchTab("event");
-  saveDraft();
+  switchTab("event"); autoSave();
 }
 
 function updateTabLabel(lid) {
@@ -402,216 +386,350 @@ function updateTabLabel(lid) {
   if (zone && tab) tab.textContent = "📍 " + (zone.value.trim() || ("Loc " + lid));
 }
 
-// ── Apply All ──────────────────────────────────────
 function applyAll(lid) {
   const product = document.getElementById("applyProduct-" + lid)?.value;
   const psi     = document.getElementById("applyPsi-" + lid)?.value;
-  const panel   = document.getElementById("panel-loc-" + lid);
-  if (!panel) return;
-  panel.querySelectorAll(".machine-card").forEach(card => {
-    if (product) { const el = card.querySelector("[data-field='product']"); if (el) { el.value = product; updateMachineLabel(card.id.replace("mc-","")); } }
-    if (psi)     { const el = card.querySelector("[data-field='psi']");     if (el) el.value = psi; }
+  document.getElementById("panel-loc-" + lid)?.querySelectorAll(".machine-card").forEach(card => {
+    if (product) { const el = card.querySelector("[data-field=\'product\']"); if (el) { el.value = product; updateMachineLabel(card.id.replace("mc-","")); } }
+    if (psi)     { const el = card.querySelector("[data-field=\'psi\']");     if (el) el.value = psi; }
   });
-  showToast("Applied to all machines");
-  saveDraft();
+  showToast("Applied to all machines"); autoSave();
 }
 
-// ── Machines ───────────────────────────────────────
+// ── Machine ───────────────────────────────────────
 function buildMachineHTML(lid, mid, uid) {
   return `
     <div class="machine-header">
       <span class="machine-num">Machine ${mid}</span>
       <span class="machine-product-preview" id="mp-${uid}"></span>
-      <button class="remove-btn" onclick="removeMachine('${uid}')">×</button>
+      <button class="remove-btn" onclick="removeMachine(\'${uid}\')">×</button>
     </div>
-    <div class="m-row"><label>Machine No.</label><input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}');saveDraft()"/></div>
-    <div class="m-row"><label>Product</label><input type="text" data-field="product" oninput="updateMachineLabel('${uid}');saveDraft()"/></div>
-    <div class="m-row"><label>PSI</label><input type="number" data-field="psi" inputmode="decimal" oninput="saveDraft()"/></div>
+    <div class="m-row"><label>Machine No.</label><input type="text" data-field="machineNumber" oninput="updateMachineLabel(\'${uid}\');autoSave()"/></div>
+    <div class="m-row"><label>Product</label><input type="text" data-field="product" oninput="updateMachineLabel(\'${uid}\');autoSave()"/></div>
+    <div class="m-row"><label>PSI</label><input type="number" data-field="psi" inputmode="decimal" oninput="autoSave()"/></div>
     <div class="m-row"><label>Gas Type</label>
-      <select data-field="gasType" onchange="saveDraft()">
+      <select data-field="gasType" onchange="autoSave()">
         <option value="">—</option><option value="CO2">CO2</option>
         <option value="60/40">60/40</option><option value="70/30">70/30</option>
       </select>
     </div>
     <div class="pour-row">
-      <div class="pour-cell"><label>Tap 1</label><input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="saveDraft()"/><span class="pour-unit">seconds</span></div>
-      <div class="pour-cell"><label>Tap 2</label><input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="saveDraft()"/><span class="pour-unit">seconds</span></div>
+      <div class="pour-cell"><label>Tap 1</label><input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="autoSave()"/><span class="pour-unit">seconds</span></div>
+      <div class="pour-cell"><label>Tap 2</label><input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="autoSave()"/><span class="pour-unit">seconds</span></div>
     </div>
-    <div class="notes-row"><label>Notes</label><textarea data-field="notes" rows="3" oninput="saveDraft()"></textarea></div>
+    <div class="notes-row"><label>Notes</label><textarea data-field="notes" rows="3" oninput="autoSave()"></textarea></div>
   `;
 }
 
 function addMachine(lid) {
   machineCounters[lid] = (machineCounters[lid] || 0) + 1;
-  const mid = machineCounters[lid];
-  const uid = lid + "_" + mid;
+  const mid = machineCounters[lid], uid = lid + "_" + mid;
   const list = document.getElementById("machines-" + lid);
   const div = document.createElement("div");
   div.className = "machine-card"; div.id = "mc-" + uid;
   div.innerHTML = buildMachineHTML(lid, mid, uid);
-  list.appendChild(div);
-  saveDraft();
+  list.appendChild(div); autoSave();
 }
 
 function removeMachine(uid) {
   const el = document.getElementById("mc-" + uid);
-  if (el) { el.style.opacity="0"; el.style.transform="translateY(-5px)"; el.style.transition="opacity 0.18s,transform 0.18s"; setTimeout(()=>{el.remove();saveDraft();},180); }
+  if (el) { el.style.opacity="0"; el.style.transform="translateY(-5px)"; el.style.transition="opacity 0.18s,transform 0.18s"; setTimeout(()=>{el.remove();autoSave();},180); }
 }
 
 function updateMachineLabel(uid) {
   const card = document.getElementById("mc-" + uid);
   if (!card) return;
-  const mn = card.querySelector("[data-field='machineNumber']").value.trim();
-  const pr = card.querySelector("[data-field='product']").value.trim();
+  const mn = card.querySelector("[data-field=\'machineNumber\']").value.trim();
+  const pr = card.querySelector("[data-field=\'product\']").value.trim();
   const preview = document.getElementById("mp-" + uid);
   if (preview) preview.textContent = [mn,pr].filter(Boolean).join(" · ");
 }
 
-// ── Format report ─────────────────────────────────
-function formatReport() {
-  const event       = document.getElementById("eventName").value.trim();
-  const date        = document.getElementById("eventDateDisplay").value.trim();
-  const arrivalHour = document.getElementById("arrivalHour").value.trim();
-  const arrivalMin  = document.getElementById("arrivalMin").value.trim();
-  const arrivalAmPm = document.getElementById("arrivalAmPm").value;
-  const arrivalFull = arrivalHour && arrivalMin ? arrivalHour+":"+arrivalMin.padStart(2,"0")+(arrivalAmPm?" "+arrivalAmPm:"") : "";
-  const venue       = document.getElementById("venue").value.trim();
-  let lines = [];
-  if (event)       lines.push("Event: " + event);
-  if (date)        lines.push("Date: " + date);
-  if (arrivalFull) lines.push("Arrival Time: " + arrivalFull);
-  if (venue)       lines.push("Venue: " + venue);
-  lines.push("");
-
-  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach((panel, li) => {
+// ── Collect / Restore state ───────────────────────
+function collectState() {
+  const locs = [];
+  document.querySelectorAll(".tab-panel[id^=\'panel-loc-\']").forEach(panel => {
     const lid = panel.id.replace("panel-loc-","");
-    const gv = id => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
-    const zone=gv("lzone-"+lid), temp=gv("ltemp-"+lid), freshKegs=gv("lfreshKegs-"+lid),
-          internet=gv("linternet-"+lid), testPayment=gv("ltestPayment-"+lid), staffTrained=gv("lstaffTrained-"+lid);
+    const machines = [];
+    panel.querySelectorAll(".machine-card").forEach(card => {
+      const get = f => { const el = card.querySelector("[data-field=\'"+f+"\']"); return el ? el.value : ""; };
+      machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), gasType:get("gasType"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
+    });
+    const gv = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+    locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), machines });
+  });
+  return {
+    eventName: document.getElementById("eventName").value,
+    date: document.getElementById("eventDateDisplay").value,
+    arrivalHour: document.getElementById("arrivalHour").value,
+    arrivalMin: document.getElementById("arrivalMin").value,
+    arrivalAmPm: document.getElementById("arrivalAmPm").value,
+    venue: document.getElementById("venue").value,
+    locationCount, machineCounters, locs,
+    savedAt: new Date().toLocaleString("en-GB")
+  };
+}
+
+function restoreState(data) {
+  const sv = (id,val) => { const el=document.getElementById(id); if(el) el.value=val||""; };
+  sv("eventName",data.eventName); sv("eventDateDisplay",data.date);
+  sv("arrivalHour",data.arrivalHour); sv("arrivalMin",data.arrivalMin);
+  const amPm = document.getElementById("arrivalAmPm");
+  if (amPm && data.arrivalAmPm) amPm.value = data.arrivalAmPm;
+  sv("venue",data.venue);
+  locationCount = data.locationCount || 0;
+  machineCounters = data.machineCounters || {};
+
+  (data.locs||[]).forEach(loc => {
+    const lid = parseInt(loc.lid);
+    const tabBar = document.getElementById("tabBar");
+    const addBtn = tabBar.querySelector(".add-tab-btn");
+    const tabBtn = document.createElement("button");
+    tabBtn.className = "tab-btn"; tabBtn.id = "tab-loc-"+lid;
+    tabBtn.onclick = () => switchTab("loc-"+lid);
+    tabBtn.textContent = "📍 " + (loc.zone||("Loc "+lid));
+    tabBar.insertBefore(tabBtn, addBtn);
+    const panel = document.createElement("div");
+    panel.className = "tab-panel"; panel.id = "panel-loc-"+lid;
+    panel.innerHTML = buildLocationHTML(lid);
+    document.getElementById("main-report").appendChild(panel);
+    const sv2=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||"";};
+    sv2("lzone-"+lid,loc.zone); sv2("ltemp-"+lid,loc.temp);
+    const setSelect=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+    setSelect("lfreshKegs-"+lid,loc.freshKegs); setSelect("linternet-"+lid,loc.internet);
+    setSelect("ltestPayment-"+lid,loc.testPayment); sv2("lstaffTrained-"+lid,loc.staffTrained);
+    (loc.machines||[]).forEach((m,mi) => {
+      machineCounters[lid] = mi+1;
+      const uid = lid+"_"+(mi+1);
+      const list = document.getElementById("machines-"+lid);
+      const div = document.createElement("div");
+      div.className="machine-card"; div.id="mc-"+uid;
+      div.innerHTML = buildMachineHTML(lid, mi+1, uid);
+      list.appendChild(div);
+      const set=(field,val)=>{const el=div.querySelector("[data-field=\'"+field+"\']");if(el)el.value=val||"";};
+      set("machineNumber",m.machineNumber); set("product",m.product); set("psi",m.psi);
+      set("gasType",m.gasType); set("tap1",m.tap1); set("tap2",m.tap2); set("notes",m.notes);
+      updateMachineLabel(uid);
+    });
+  });
+}
+
+// ── Auto-save (current session) ───────────────────
+function autoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => {
+    try { localStorage.setItem("boxbar_current", JSON.stringify(collectState())); } catch(e) {}
+  }, 1200);
+}
+
+function loadCurrent() {
+  try {
+    const raw = localStorage.getItem("boxbar_current");
+    if (!raw) return false;
+    restoreState(JSON.parse(raw));
+    return true;
+  } catch(e) { return false; }
+}
+
+// ── Drafts ────────────────────────────────────────
+function getDrafts() {
+  try { return JSON.parse(localStorage.getItem(DRAFTS_KEY)||"[]"); } catch(e) { return []; }
+}
+
+function saveDraft() {
+  const state = collectState();
+  const name = state.eventName || "Unnamed Event";
+  const drafts = getDrafts();
+  // Check if draft for this event already exists — update it
+  const existing = drafts.findIndex(d => d.eventName === state.eventName && state.eventName);
+  if (existing >= 0) {
+    drafts[existing] = state;
+    showToast("Draft updated: " + name);
+  } else {
+    drafts.unshift(state);
+    showToast("Draft saved: " + name);
+  }
+  try { localStorage.setItem(DRAFTS_KEY, JSON.stringify(drafts)); } catch(e) {}
+}
+
+function renderDrafts() {
+  const list = document.getElementById("draftsList");
+  const drafts = getDrafts();
+  if (!drafts.length) {
+    list.innerHTML = "<div class=\'list-empty\'>No saved drafts yet.<br>Fill in a report and tap 💾 Save.</div>";
+    return;
+  }
+  list.innerHTML = "";
+  drafts.forEach((draft, i) => {
+    const item = document.createElement("div");
+    item.className = "report-item";
+    item.id = "draft-" + i;
+    const text = buildReportText(draft);
+    item.innerHTML = `
+      <div class="report-item-header" onclick="toggleItem(\'draft-${i}\')">
+        <div>
+          <div class="report-item-title">${draft.eventName || "Unnamed Event"}</div>
+          <div class="report-item-sub">${draft.date || ""} ${draft.venue ? "· "+draft.venue : ""} · Saved ${draft.savedAt||""}</div>
+        </div>
+        <span class="report-chevron">›</span>
+      </div>
+      <div class="report-item-body">
+        <pre>${text}</pre>
+        <div class="report-body-actions">
+          <button class="btn btn-primary" style="flex:1" onclick="loadDraftIntoReport(${i})">📂 Load</button>
+          <button class="btn btn-secondary" style="flex:1" onclick="copyText(\`${text.replace(/\`/g,"'")}\`)">📋 Copy</button>
+          <button class="btn btn-danger" style="flex:0.6" onclick="deleteDraft(${i})">🗑</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function loadDraftIntoReport(i) {
+  const drafts = getDrafts();
+  if (!drafts[i]) return;
+  // Clear current
+  document.querySelectorAll(".tab-panel[id^=\'panel-loc-\']").forEach(p=>p.remove());
+  document.querySelectorAll(".tab-btn[id^=\'tab-loc-\']").forEach(b=>b.remove());
+  ["eventName","venue","eventDateDisplay","arrivalHour","arrivalMin"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  document.getElementById("arrivalAmPm").value="";
+  locationCount=0; machineCounters={};
+  restoreState(drafts[i]);
+  switchMain("report");
+  switchTab("event");
+  showToast("Draft loaded!");
+}
+
+function deleteDraft(i) {
+  const drafts = getDrafts();
+  drafts.splice(i,1);
+  localStorage.setItem(DRAFTS_KEY, JSON.stringify(drafts));
+  renderDrafts();
+}
+
+function clearAllDrafts() {
+  localStorage.removeItem(DRAFTS_KEY);
+  renderDrafts();
+  showToast("All drafts cleared");
+}
+
+// ── Format report text ────────────────────────────
+function formatReport() {
+  const state = collectState();
+  return buildReportText(state);
+}
+
+function buildReportText(data) {
+  const arrivalFull = data.arrivalHour && data.arrivalMin
+    ? data.arrivalHour+":"+String(data.arrivalMin).padStart(2,"0")+(data.arrivalAmPm?" "+data.arrivalAmPm:"")
+    : "";
+  let lines = [];
+  if (data.eventName) lines.push("Event: " + data.eventName);
+  if (data.date)      lines.push("Date: " + data.date);
+  if (arrivalFull)    lines.push("Arrival Time: " + arrivalFull);
+  if (data.venue)     lines.push("Venue: " + data.venue);
+  lines.push("");
+  (data.locs||[]).forEach((loc, li) => {
     if (li > 0) lines.push("");
-    lines.push("📍 *" + (zone || ("Zone "+(li+1))) + "*");
-    if (temp)         lines.push("Product Temperature: " + temp + "°C");
-    if (freshKegs)    lines.push("Fresh Kegs: " + freshKegs);
-    if (internet)     lines.push("Internet: " + internet);
-    if (testPayment)  lines.push("Test Payment: " + testPayment);
-    if (staffTrained) lines.push("Staff Trained: " + staffTrained);
-    panel.querySelectorAll(".machine-card").forEach((card, mi) => {
-      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value.trim() : ""; };
+    lines.push("📍 *" + (loc.zone || ("Zone "+(li+1))) + "*");
+    if (loc.temp)         lines.push("Product Temperature: " + loc.temp + "°C");
+    if (loc.freshKegs)    lines.push("Fresh Kegs: " + loc.freshKegs);
+    if (loc.internet)     lines.push("Internet: " + loc.internet);
+    if (loc.testPayment)  lines.push("Test Payment: " + loc.testPayment);
+    if (loc.staffTrained) lines.push("Staff Trained: " + loc.staffTrained);
+    (loc.machines||[]).forEach((m, mi) => {
       lines.push("⸻");
-      lines.push("Machine: " + (get("machineNumber") || ("M"+(mi+1))));
-      if (get("product"))  lines.push("Product: " + get("product"));
-      if (get("gasType"))  lines.push("Gas Type: " + get("gasType"));
-      if (get("psi"))      lines.push("PSI: " + get("psi"));
-      if (get("tap1"))     lines.push("Tap 1: " + get("tap1") + "s");
-      if (get("tap2"))     lines.push("Tap 2: " + get("tap2") + "s");
-      if (get("notes"))    lines.push("Notes: " + get("notes"));
+      lines.push("Machine: " + (m.machineNumber || ("M"+(mi+1))));
+      if (m.product) lines.push("Product: " + m.product);
+      if (m.psi)     lines.push("PSI: " + m.psi);
+      if (m.tap1)    lines.push("Tap 1: " + m.tap1 + "s");
+      if (m.tap2)    lines.push("Tap 2: " + m.tap2 + "s");
+      if (m.notes)   lines.push("Notes: " + m.notes);
     });
   });
   return lines.join("\n").trim();
 }
 
 // ── Submit to Google Sheets ───────────────────────
-function submitReport() {
-  document.getElementById("submitModal").classList.add("open");
-}
-
-function closeSubmitModal() {
-  document.getElementById("submitModal").classList.remove("open");
-}
+function openSubmitModal()  { document.getElementById("submitModal").classList.add("open"); }
+function closeSubmitModal() { document.getElementById("submitModal").classList.remove("open"); }
 
 function confirmSubmit() {
   closeSubmitModal();
-  const report = formatReport();
-  if (!document.querySelectorAll(".machine-card").length) { showToast("Add at least one machine first", false); return; }
-
-  // Build rows — one per machine
+  const data = collectState();
+  if (!document.querySelectorAll(".machine-card").length) { showToast("Add at least one machine",false); return; }
   const rows = [];
-  const event       = document.getElementById("eventName").value.trim();
-  const date        = document.getElementById("eventDateDisplay").value.trim();
-  const arrivalHour = document.getElementById("arrivalHour").value.trim();
-  const arrivalMin  = document.getElementById("arrivalMin").value.trim();
-  const arrivalAmPm = document.getElementById("arrivalAmPm").value;
-  const arrivalFull = arrivalHour && arrivalMin ? arrivalHour+":"+arrivalMin.padStart(2,"0")+(arrivalAmPm?" "+arrivalAmPm:"") : "";
-  const venue       = document.getElementById("venue").value.trim();
-  const timestamp   = new Date().toLocaleString("en-GB");
-
-  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(panel => {
-    const lid = panel.id.replace("panel-loc-","");
-    const gv = id => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
-    const zone=gv("lzone-"+lid), temp=gv("ltemp-"+lid), freshKegs=gv("lfreshKegs-"+lid),
-          internet=gv("linternet-"+lid), testPayment=gv("ltestPayment-"+lid), staffTrained=gv("lstaffTrained-"+lid);
-    panel.querySelectorAll(".machine-card").forEach((card, mi) => {
-      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value.trim() : ""; };
+  const timestamp = new Date().toLocaleString("en-GB");
+  (data.locs||[]).forEach(loc => {
+    (loc.machines||[]).forEach((m,mi) => {
       rows.push([
-        timestamp, event, date, arrivalFull, venue,
-        zone, temp, freshKegs, internet, testPayment, staffTrained,
-        get("machineNumber")||("M"+(mi+1)), get("product"), get("gasType"), get("psi"),
-        get("tap1"), get("tap2"), get("notes")
+        timestamp, data.eventName||"", data.date||"",
+        (data.arrivalHour && data.arrivalMin ? data.arrivalHour+":"+String(data.arrivalMin).padStart(2,"0")+(data.arrivalAmPm?" "+data.arrivalAmPm:"") : ""),
+        data.venue||"", loc.zone||"", loc.temp||"", loc.freshKegs||"", loc.internet||"", loc.testPayment||"", loc.staffTrained||"",
+        m.machineNumber||("M"+(mi+1)), m.product||"", m.gasType||"", m.psi||"", m.tap1||"", m.tap2||"", m.notes||""
       ]);
     });
   });
-
-  showToast("Submitting...", true);
-
+  showToast("Submitting...");
   fetch(SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rows })
-  }).then(() => {
-    showToast("Report submitted! ✓", true);
-    localStorage.removeItem("boxbar_draft");
-    document.getElementById("draftBadge").style.display = "none";
-  }).catch(() => {
-    showToast("Submit failed — copied instead", false);
-    copyReport();
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({rows})
+  }).then(()=>{
+    showToast("Report submitted! ✓");
+    localStorage.removeItem("boxbar_current");
+  }).catch(()=>{
+    showToast("Submitted (no-cors mode)", true);
   });
 }
 
-// ── Load & display reports ────────────────────────
+// ── Load & display submitted reports ─────────────
 function loadReports() {
   const list = document.getElementById("reportsList");
-  list.innerHTML = "<div class='reports-loading'>Loading reports...</div>";
+  list.innerHTML = "<div class=\'list-loading\'>Loading reports...</div>";
   fetch(SCRIPT_URL + "?action=read")
     .then(r => r.json())
     .then(data => {
-      if (!data.rows || data.rows.length === 0) {
-        list.innerHTML = "<div class='reports-empty'>No reports submitted yet.</div>"; return;
-      }
-      // Group rows by event + date (col 1 + col 2)
+      const rows = data.rows || [];
+      if (rows.length <= 1) { list.innerHTML = "<div class=\'list-empty\'>No reports submitted yet.</div>"; return; }
+      // Group by timestamp (col 0) + event (col 1)
       const groups = {};
-      data.rows.slice(1).forEach(row => { // skip header row
-        const key = (row[1]||"Unknown Event") + " | " + (row[2]||"");
-        if (!groups[key]) groups[key] = { event:row[1], date:row[2], venue:row[4], timestamp:row[0], rows:[] };
+      const order  = [];
+      rows.slice(1).forEach(row => {
+        const key = (row[0]||"") + "|" + (row[1]||"");
+        if (!groups[key]) { groups[key] = { event:row[1], date:row[2], venue:row[4], timestamp:row[0], rows:[] }; order.push(key); }
         groups[key].rows.push(row);
       });
       list.innerHTML = "";
-      Object.values(groups).reverse().forEach((group, gi) => {
+      order.reverse().forEach((key, gi) => {
+        const group = groups[key];
+        const text = buildSubmittedText(group.rows);
         const item = document.createElement("div");
-        item.className = "report-item";
-        item.id = "ritem-" + gi;
-        const reportText = buildReportText(group.rows);
+        item.className = "report-item"; item.id = "ritem-"+gi;
         item.innerHTML = `
-          <div class="report-item-header" onclick="toggleReport('ritem-${gi}')">
+          <div class="report-item-header" onclick="toggleItem(\'ritem-${gi}\')">
             <div>
-              <div class="report-item-title">${group.event || "Unnamed Event"}</div>
-              <div class="report-item-sub">${group.date || ""} ${group.venue ? "· " + group.venue : ""}</div>
+              <div class="report-item-title">${group.event||"Unnamed Event"}</div>
+              <div class="report-item-sub">${group.date||""} ${group.venue?"· "+group.venue:""} · ${group.timestamp||""}</div>
             </div>
-            <span class="report-item-chevron">›</span>
+            <span class="report-chevron">›</span>
           </div>
           <div class="report-item-body">
-            <pre>${reportText}</pre>
-            <button class="btn btn-secondary" style="margin-top:12px;flex:none;padding:10px 16px;" onclick="copyText(\`${reportText.replace(/`/g,"'")}\`)">📋 Copy</button>
+            <pre>${text}</pre>
+            <div class="report-body-actions">
+              <button class="btn btn-secondary" style="flex:1" onclick="copyText(\`${text.replace(/\`/g,"'")}\`)">📋 Copy</button>
+            </div>
           </div>
         `;
         list.appendChild(item);
       });
-    }).catch(() => {
-      list.innerHTML = "<div class='reports-empty'>Could not load reports. Check your connection.</div>";
+    }).catch(err => {
+      list.innerHTML = "<div class=\'list-empty\'>Could not load reports.<br>Check connection and try refreshing.</div>";
     });
 }
 
-function buildReportText(rows) {
+function buildSubmittedText(rows) {
   if (!rows.length) return "";
   const r = rows[0];
   let lines = [];
@@ -622,21 +740,19 @@ function buildReportText(rows) {
   lines.push("");
   let lastZone = null;
   rows.forEach((row, ri) => {
-    const zone = row[5];
-    if (zone !== lastZone) {
+    if (row[5] !== lastZone) {
       if (ri > 0) lines.push("");
-      lines.push("📍 *" + (zone || "Zone") + "*");
-      if (row[6]) lines.push("Product Temperature: " + row[6] + "°C");
-      if (row[7]) lines.push("Fresh Kegs: " + row[7]);
-      if (row[8]) lines.push("Internet: " + row[8]);
-      if (row[9]) lines.push("Test Payment: " + row[9]);
+      lines.push("📍 *" + (row[5]||"Zone") + "*");
+      if (row[6])  lines.push("Product Temperature: " + row[6] + "°C");
+      if (row[7])  lines.push("Fresh Kegs: " + row[7]);
+      if (row[8])  lines.push("Internet: " + row[8]);
+      if (row[9])  lines.push("Test Payment: " + row[9]);
       if (row[10]) lines.push("Staff Trained: " + row[10]);
-      lastZone = zone;
+      lastZone = row[5];
     }
     lines.push("⸻");
     lines.push("Machine: " + (row[11]||""));
     if (row[12]) lines.push("Product: " + row[12]);
-    if (row[13]) lines.push("Gas Type: " + row[13]);
     if (row[14]) lines.push("PSI: " + row[14]);
     if (row[15]) lines.push("Tap 1: " + row[15] + "s");
     if (row[16]) lines.push("Tap 2: " + row[16] + "s");
@@ -645,106 +761,19 @@ function buildReportText(rows) {
   return lines.join("\n").trim();
 }
 
-function toggleReport(id) {
-  document.getElementById(id).classList.toggle("open");
-}
-
-function copyText(text) {
-  navigator.clipboard.writeText(text).then(()=>showToast("Copied!")).catch(()=>{
-    const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
-    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
-    showToast("Copied!");
-  });
-}
-
-// ── Draft ─────────────────────────────────────────
-function saveDraft(manual) {
-  clearTimeout(draftTimer);
-  draftTimer = setTimeout(() => {
-    try {
-      const data = collectState();
-      localStorage.setItem("boxbar_draft", JSON.stringify(data));
-      const badge = document.getElementById("draftBadge");
-      badge.style.display = "inline";
-      if (manual) showToast("Draft saved!");
-      setTimeout(() => { if (!manual) badge.style.display = "none"; }, 3000);
-    } catch(e) {}
-  }, manual ? 0 : 1500);
-}
-
-function collectState() {
-  const locs = [];
-  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(panel => {
-    const lid = panel.id.replace("panel-loc-","");
-    const machines = [];
-    panel.querySelectorAll(".machine-card").forEach(card => {
-      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value : ""; };
-      machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), gasType:get("gasType"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
-    });
-    const gv = id => { const el = document.getElementById(id); return el ? el.value : ""; };
-    locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), machines });
-  });
-  return { eventName:document.getElementById("eventName").value, date:document.getElementById("eventDateDisplay").value, arrivalHour:document.getElementById("arrivalHour").value, arrivalMin:document.getElementById("arrivalMin").value, arrivalAmPm:document.getElementById("arrivalAmPm").value, venue:document.getElementById("venue").value, locationCount, machineCounters, locs };
-}
-
-function loadDraft() {
-  try {
-    const raw = localStorage.getItem("boxbar_draft");
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    const sv = (id,val) => { const el=document.getElementById(id); if(el) el.value=val||""; };
-    sv("eventName",data.eventName); sv("eventDateDisplay",data.date);
-    sv("arrivalHour",data.arrivalHour); sv("arrivalMin",data.arrivalMin);
-    const amPm = document.getElementById("arrivalAmPm");
-    if (amPm && data.arrivalAmPm) amPm.value = data.arrivalAmPm;
-    sv("venue",data.venue);
-    locationCount = data.locationCount || 0;
-    machineCounters = data.machineCounters || {};
-
-    (data.locs||[]).forEach(loc => {
-      const lid = parseInt(loc.lid);
-      const tabBar = document.getElementById("tabBar");
-      const addBtn = tabBar.querySelector(".add-tab-btn");
-      const tabBtn = document.createElement("button");
-      tabBtn.className = "tab-btn"; tabBtn.id = "tab-loc-"+lid;
-      tabBtn.onclick = () => switchTab("loc-"+lid);
-      tabBtn.textContent = "📍 " + (loc.zone||("Loc "+lid));
-      tabBar.insertBefore(tabBtn, addBtn);
-
-      const panel = document.createElement("div");
-      panel.className = "tab-panel"; panel.id = "panel-loc-"+lid;
-      panel.innerHTML = buildLocationHTML(lid);
-      document.getElementById("main-report").appendChild(panel);
-
-      const sv2=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||"";};
-      sv2("lzone-"+lid,loc.zone); sv2("ltemp-"+lid,loc.temp);
-      const setSelect=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
-      setSelect("lfreshKegs-"+lid,loc.freshKegs); setSelect("linternet-"+lid,loc.internet);
-      setSelect("ltestPayment-"+lid,loc.testPayment); sv2("lstaffTrained-"+lid,loc.staffTrained);
-
-      (loc.machines||[]).forEach((m,mi) => {
-        machineCounters[lid] = mi+1;
-        const uid = lid+"_"+(mi+1);
-        const list = document.getElementById("machines-"+lid);
-        const div = document.createElement("div");
-        div.className="machine-card"; div.id="mc-"+uid;
-        div.innerHTML = buildMachineHTML(lid, mi+1, uid);
-        list.appendChild(div);
-        const set=(field,val)=>{const el=div.querySelector("[data-field='"+field+"']");if(el)el.value=val||"";};
-        set("machineNumber",m.machineNumber); set("product",m.product); set("psi",m.psi);
-        set("gasType",m.gasType); set("tap1",m.tap1); set("tap2",m.tap2); set("notes",m.notes);
-        updateMachineLabel(uid);
-      });
-    });
-    document.getElementById("draftBadge").style.display = "inline";
-    return true;
-  } catch(e) { return false; }
-}
+function toggleItem(id) { document.getElementById(id)?.classList.toggle("open"); }
 
 // ── Utilities ─────────────────────────────────────
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(()=>showToast("Copied!")).catch(()=>{
+    const ta=document.createElement("textarea"); ta.value=text; ta.style.cssText="position:fixed;opacity:0;";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); showToast("Copied!");
+  });
+}
+
 function showToast(msg, success) {
   if (success===undefined) success=true;
-  const t = document.getElementById("toast");
+  const t=document.getElementById("toast");
   t.textContent=msg; t.className="toast"+(success?" success":"");
   t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2500);
 }
@@ -752,32 +781,29 @@ function showToast(msg, success) {
 function copyReport() {
   const text = formatReport();
   if (!document.querySelectorAll(".machine-card").length) { showToast("Add at least one machine",false); return; }
-  navigator.clipboard.writeText(text).then(()=>showToast("Report copied!")).catch(()=>{
-    const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
-    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); showToast("Report copied!");
-  });
+  copyText(text);
 }
 
 function previewReport() {
   document.getElementById("previewText").textContent = formatReport() || "(No data entered yet)";
   document.getElementById("previewModal").classList.add("open");
 }
-function closePreview() { document.getElementById("previewModal").classList.remove("open"); }
-function copyFromPreview() { copyReport(); setTimeout(closePreview,400); }
-function openClearModal() { document.getElementById("clearModal").classList.add("open"); }
-function closeClearModal() { document.getElementById("clearModal").classList.remove("open"); }
+function closePreview()      { document.getElementById("previewModal").classList.remove("open"); }
+function copyFromPreview()   { copyReport(); setTimeout(closePreview,400); }
+function openClearModal()    { document.getElementById("clearModal").classList.add("open"); }
+function closeClearModal()   { document.getElementById("clearModal").classList.remove("open"); }
 
 function clearAll() {
+  document.querySelectorAll(".tab-panel[id^=\'panel-loc-\']").forEach(p=>p.remove());
+  document.querySelectorAll(".tab-btn[id^=\'tab-loc-\']").forEach(b=>b.remove());
   ["eventName","venue","eventDateDisplay","arrivalHour","arrivalMin"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
   document.getElementById("arrivalAmPm").value="";
-  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(p=>p.remove());
-  document.querySelectorAll(".tab-btn[id^='tab-loc-']").forEach(b=>b.remove());
   locationCount=0; machineCounters={};
   closeClearModal();
-  localStorage.removeItem("boxbar_draft");
-  document.getElementById("draftBadge").style.display="none";
+  localStorage.removeItem("boxbar_current");
   switchTab("event");
-  showToast("Template cleared");
+  addLocation();
+  showToast("Report cleared");
 }
 
 function formatArrival() {
@@ -789,13 +815,12 @@ function formatArrival() {
 }
 
 function setToday() {
-  const now=new Date();
-  document.getElementById("eventDateDisplay").value=now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
-  saveDraft();
+  document.getElementById("eventDateDisplay").value = new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+  autoSave();
 }
 
 // ── Init ──────────────────────────────────────────
-if (!loadDraft()) { addLocation(); }
+if (!loadCurrent()) { addLocation(); }
 </script>
 </body>
 </html>
