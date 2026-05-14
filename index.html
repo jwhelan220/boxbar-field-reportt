@@ -357,12 +357,6 @@ function buildMachineHTML(lid, mid, uid) {
     <div class="m-row"><label>Machine No.</label><input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}');autoSave()"/></div>
     <div class="m-row"><label>Product</label><input type="text" data-field="product" oninput="updateMachineLabel('${uid}');autoSave()"/></div>
     <div class="m-row"><label>PSI</label><input type="number" data-field="psi" inputmode="decimal" oninput="autoSave()"/></div>
-    <div class="m-row"><label>Gas Type</label>
-      <select data-field="gasType" onchange="autoSave()">
-        <option value="">—</option><option value="CO2">CO2</option>
-        <option value="60/40">60/40</option><option value="70/30">70/30</option>
-      </select>
-    </div>
     <div class="pour-row">
       <div class="pour-cell"><label>Tap 1</label><input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="autoSave()"/><span class="pour-unit">seconds</span></div>
       <div class="pour-cell"><label>Tap 2</label><input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="autoSave()"/><span class="pour-unit">seconds</span></div>
@@ -403,7 +397,7 @@ function collectState() {
     const machines = [];
     panel.querySelectorAll(".machine-card").forEach(card => {
       const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value : ""; };
-      machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), gasType:get("gasType"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
+      machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
     });
     const gv = id => { const el = document.getElementById(id); return el ? el.value : ""; };
     locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), machines });
@@ -454,7 +448,8 @@ function restoreState(data) {
       list.appendChild(div);
       const set=(f,v)=>{const el=div.querySelector("[data-field='"+f+"']");if(el)el.value=v||"";};
       set("machineNumber",m.machineNumber); set("product",m.product); set("psi",m.psi);
-      set("gasType",m.gasType); set("tap1",m.tap1); set("tap2",m.tap2); set("notes",m.notes);
+      set("machineNumber",m.machineNumber); set("product",m.product); set("psi",m.psi);
+      set("tap1",m.tap1); set("tap2",m.tap2); set("notes",m.notes);
       updateMachineLabel(uid);
     });
   });
