@@ -600,7 +600,7 @@ function confirmSubmit() {
       rows.push([
         timestamp, data.eventName||"", data.date||"", arrivalFull, data.venue||"",
         loc.zone||"", loc.temp||"", loc.freshKegs||"", loc.internet||"", loc.testPayment||"", loc.staffTrained||"",
-        m.machineNumber||("M"+(mi+1)), m.product||"", m.gasType||"", m.psi||"", m.tap1||"", m.tap2||"", m.notes||""
+        m.machineNumber||("M"+(mi+1)), m.product||"", m.psi||"", m.tap1||"", m.tap2||"", m.notes||""
       ]);
     });
   });
@@ -608,7 +608,7 @@ function confirmSubmit() {
   fetch(SCRIPT_URL, {
     method:"POST", mode:"no-cors",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ eventName: data.eventName||"Unnamed Event", rows })
+    body: JSON.stringify({ venueName: data.venue||"Unknown Venue", rows })
   }).then(()=>{ showToast("Report submitted! ✓"); localStorage.removeItem("boxbar_current"); })
     .catch(()=>{ showToast("Submitted!"); });
 }
