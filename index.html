@@ -1,388 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Boxbar" />
-<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Boxbar"/>
+<link rel="apple-touch-icon" href="data:image/png;base64,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"/>
 <title>Boxbar Field Report</title>
 <style>
-  :root {
-    --bg: #0d0f12;
-    --surface: #161a20;
-    --surface2: #1e2329;
-    --border: rgba(255,255,255,0.08);
-    --border-strong: rgba(255,255,255,0.15);
-    --accent: #ff00cc;
-    --accent-dim: rgba(255,0,204,0.12);
-    --accent-dim2: rgba(255,0,204,0.22);
-    --text: #f0f2f5;
-    --text-muted: #8a9099;
-    --text-dim: #555c66;
-    --danger: #ff5c5c;
-    --danger-dim: rgba(255,92,92,0.1);
-    --radius: 14px;
-    --radius-sm: 8px;
-    --font: -apple-system, 'SF Pro Display', BlinkMacSystemFont, sans-serif;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100vh;
-    padding-bottom: 130px;
-  }
-
-  .app-header {
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(13,15,18,0.93);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-
-  .app-title span:first-child {
-    display: block; font-size: 11px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
-  }
-
-  .app-title span:last-child {
-    display: block; font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.1;
-  }
-
-  .header-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 10px var(--accent);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50% { opacity:0.45; transform:scale(0.82); }
-  }
-
-  .section { padding: 20px 16px 0; }
-
-  .section-label {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--text-dim);
-    margin-bottom: 10px; padding-left: 4px;
-  }
-
-  /* Event card */
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); overflow: hidden; margin-bottom: 12px;
-  }
-
-  .card-row {
-    display: flex; align-items: center;
-    padding: 13px 16px; border-bottom: 1px solid var(--border); gap: 12px;
-  }
-
-  .card-row:last-child { border-bottom: none; }
-
-  .card-row label { font-size: 14px; color: var(--text-muted); min-width: 100px; flex-shrink: 0; }
-
-  .card-row input {
-    flex: 1; background: none; border: none; outline: none;
-    color: var(--text); font-size: 14px; font-family: var(--font);
-    text-align: right; min-width: 0; -webkit-appearance: none;
-  }
-
-  .card-row input[type="date"] { color-scheme: dark; }
-
-  /* Location block */
-  .location-block {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); margin-bottom: 20px; overflow: hidden;
-    animation: slideIn 0.25s ease;
-  }
-
-  @keyframes slideIn {
-    from { opacity:0; transform:translateY(8px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-
-  .location-header {
-    background: var(--surface2); padding: 13px 16px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .location-tag {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--accent); flex-shrink: 0;
-  }
-
-  .location-name-preview {
-    font-size: 13px; color: var(--text-muted);
-    flex: 1; margin: 0 10px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-
-  .remove-location-btn {
-    background: var(--danger-dim); border: 1px solid rgba(255,92,92,0.2);
-    color: var(--danger); border-radius: 6px; padding: 4px 10px;
-    font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0;
-    font-family: var(--font);
-  }
-
-  .loc-zone-row {
-    display: flex; align-items: center;
-    padding: 13px 16px; border-bottom: 1px solid var(--border); gap: 12px;
-  }
-
-  .loc-zone-row label { font-size: 14px; color: var(--text-muted); min-width: 100px; flex-shrink: 0; }
-
-  .loc-zone-row input {
-    flex: 1; background: none; border: none; outline: none;
-    color: var(--text); font-size: 14px; font-family: var(--font);
-    text-align: right; min-width: 0; -webkit-appearance: none;
-  }
-
-  /* Machines area inside location */
-  .machines-area { padding: 12px 12px 8px; }
-
-  .machines-sublabel {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--text-dim);
-    margin-bottom: 8px; padding-left: 2px;
-  }
-
-  /* Machine card */
-  .machine-card {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); margin-bottom: 10px; overflow: hidden;
-    animation: slideIn 0.2s ease;
-  }
-
-  .machine-header {
-    background: var(--surface2); padding: 10px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .machine-num {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--accent);
-  }
-
-  .machine-product-preview {
-    font-size: 12px; color: var(--text-muted);
-    flex: 1; margin: 0 8px; text-align: right;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-
-  .remove-btn {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: var(--danger-dim); border: 1px solid rgba(255,92,92,0.2);
-    color: var(--danger); font-size: 17px; line-height: 1;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; flex-shrink: 0; font-family: var(--font);
-  }
-
-  .m-row {
-    display: flex; align-items: center;
-    padding: 11px 14px; border-bottom: 1px solid var(--border); gap: 10px;
-  }
-
-  .m-row label { font-size: 13px; color: var(--text-muted); min-width: 90px; flex-shrink: 0; }
-
-  .m-row input {
-    flex: 1; background: none; border: none; outline: none;
-    color: var(--text); font-size: 13px; font-family: var(--font);
-    text-align: right; min-width: 0; -webkit-appearance: none;
-  }
-
-  .m-row select {
-    flex: 1; background: none; border: none; outline: none;
-    color: var(--text); font-size: 13px; font-family: var(--font);
-    text-align: right; min-width: 0; -webkit-appearance: none;
-    cursor: pointer;
-  }
-
-  .m-row select option {
-    background: #1e2329; color: var(--text);
-  }
-
-  .pour-row { display: flex; border-bottom: 1px solid var(--border); }
-
-  .pour-cell {
-    flex: 1; padding: 10px 12px; display: flex; flex-direction: column;
-    gap: 3px; border-right: 1px solid var(--border);
-  }
-
-  .pour-cell:last-child { border-right: none; }
-
-  .pour-cell label {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--text-dim);
-  }
-
-  .pour-cell input {
-    background: none; border: none; outline: none;
-    color: var(--text); font-size: 17px; font-weight: 600;
-    font-family: var(--font); width: 100%; -webkit-appearance: none;
-  }
-
-  .pour-unit { font-size: 10px; color: var(--text-dim); }
-
-  .notes-row { padding: 10px 14px; }
-
-  .notes-row label {
-    display: block; font-size: 10px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: 6px;
-  }
-
-  .notes-row textarea {
-    width: 100%; background: var(--surface2); border: 1px solid var(--border);
-    border-radius: var(--radius-sm); color: var(--text);
-    font-size: 13px; font-family: var(--font);
-    padding: 9px 11px; resize: none; min-height: 64px; outline: none; line-height: 1.5;
-  }
-
-  /* Add buttons */
-  .add-machine-btn {
-    width: 100%; padding: 11px;
-    background: var(--accent-dim); border: 1px dashed rgba(253,0,189,0.3);
-    border-radius: var(--radius-sm); color: var(--accent);
-    font-size: 13px; font-weight: 600; font-family: var(--font);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    gap: 6px; margin-bottom: 4px;
-  }
-
-  .add-machine-btn:active { background: var(--accent-dim2); }
-
-  .add-location-btn {
-    width: 100%; padding: 14px;
-    background: var(--accent-dim); border: 1px dashed rgba(253,0,189,0.3);
-    border-radius: var(--radius); color: var(--accent);
-    font-size: 15px; font-weight: 600; font-family: var(--font);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    gap: 8px; margin-bottom: 14px;
-  }
-
-  .add-location-btn:active { background: var(--accent-dim2); }
-
-  /* Bottom bar */
-  .btn-row {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 12px 16px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
-    background: rgba(13,15,18,0.95);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border); display: flex; gap: 10px;
-  }
-
-  .btn {
-    flex: 1; padding: 14px 10px; border-radius: var(--radius-sm);
-    font-size: 14px; font-weight: 600; font-family: var(--font);
-    cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
-
-  .btn:active { opacity: 0.8; transform: scale(0.97); }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border-strong); }
-  .btn-danger { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(255,92,92,0.2); }
-
-  /* Stats */
-  .stats-bar {
-    display: flex; gap: 8px; margin: 12px 16px 0; flex-wrap: wrap;
-  }
-
-  .stat-pill {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 100px; padding: 5px 12px;
-    font-size: 12px; color: var(--text-muted);
-    display: flex; align-items: center; gap: 5px;
-  }
-
-  .stat-pill strong { color: var(--accent); font-weight: 700; }
-
-  /* Toast */
-  .toast {
-    position: fixed; top: 80px; left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    background: var(--surface2); border: 1px solid var(--border-strong);
-    border-radius: 100px; padding: 10px 20px;
-    font-size: 13px; font-weight: 500; color: var(--text);
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.25s, transform 0.25s;
-    white-space: nowrap; z-index: 999;
-  }
-
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.success { color: var(--accent); border-color: rgba(253,0,189,0.35); }
-
-  /* Modals */
-  .modal-bg {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7); z-index: 200;
-    align-items: flex-end; justify-content: center;
-  }
-
-  .modal-bg.open { display: flex; }
-
-  .modal {
-    background: var(--surface); border: 1px solid var(--border-strong);
-    border-radius: 20px 20px 0 0; padding: 20px;
-    padding-bottom: max(24px, env(safe-area-inset-bottom));
-    width: 100%; max-width: 480px;
-  }
-
-  .modal h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-  .modal p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
-  .modal-actions { display: flex; gap: 10px; }
-
-  /* Preview */
-  .preview-modal {
-    display: none; position: fixed; inset: 0;
-    background: var(--bg); z-index: 300;
-    overflow-y: auto; padding: 20px 16px 110px;
-  }
-
-  .preview-modal.open { display: block; }
-
-  .preview-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
-  .preview-header h2 { font-size: 18px; font-weight: 700; }
-
-  .preview-close {
-    padding: 8px 16px; background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 100px;
-    color: var(--text); font-size: 14px; font-weight: 600;
-    cursor: pointer; font-family: var(--font);
-  }
-
-  .preview-text {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px;
-    font-size: 13px; line-height: 1.8; color: var(--text);
-    white-space: pre-wrap; word-break: break-word;
-    font-family: 'SF Mono', 'Courier New', monospace;
-  }
-
-  .preview-actions {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 12px 16px;
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
-    background: rgba(13,15,18,0.95);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border); display: flex; gap: 10px;
-  }
+:root{
+  --bg:#0d0f12;--surface:#161a20;--surface2:#1e2329;
+  --border:rgba(255,255,255,0.08);--border-strong:rgba(255,255,255,0.15);
+  --accent:#ff00cc;--accent-dim:rgba(255,0,204,0.12);--accent-dim2:rgba(255,0,204,0.22);
+  --text:#f0f2f5;--text-muted:#8a9099;--text-dim:#555c66;
+  --danger:#ff5c5c;--danger-dim:rgba(255,92,92,0.1);
+  --green:#00c896;--green-dim:rgba(0,200,150,0.12);
+  --radius:14px;--radius-sm:8px;
+  --font:-apple-system,"SF Pro Display",BlinkMacSystemFont,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;padding-bottom:90px;}
+
+/* Header */
+.app-header{position:sticky;top:0;z-index:50;background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+.app-title span:first-child{display:block;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);}
+.app-title span:last-child{display:block;font-size:20px;font-weight:700;color:var(--text);line-height:1.1;}
+.header-right{display:flex;align-items:center;gap:10px;}
+.draft-badge{font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(255,0,204,0.25);border-radius:100px;padding:4px 10px;}
+.header-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.45;transform:scale(0.82)}}
+
+/* Main nav */
+.main-nav{display:flex;background:var(--surface2);border-bottom:1px solid var(--border);position:sticky;top:57px;z-index:40;}
+.main-nav-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;background:none;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;}
+.main-nav-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* Tab bar */
+.tab-bar{display:flex;overflow-x:auto;gap:6px;padding:12px 16px 0;scrollbar-width:none;-ms-overflow-style:none;border-bottom:1px solid var(--border);background:var(--bg);}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:8px 16px;border-radius:100px 100px 0 0;font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);border-bottom:none;background:var(--surface2);color:var(--text-muted);transition:all 0.15s;white-space:nowrap;}
+.tab-btn.active{background:var(--surface);color:var(--accent);border-color:rgba(255,0,204,0.3);}
+.add-tab-btn{flex-shrink:0;padding:8px 14px;border-radius:100px 100px 0 0;font-size:18px;line-height:1;cursor:pointer;border:1px dashed rgba(255,0,204,0.3);border-bottom:none;background:var(--accent-dim);color:var(--accent);font-family:var(--font);}
+
+/* Tab panels */
+.tab-panel{display:none;padding:16px;}
+.tab-panel.active{display:block;}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;}
+.card-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;}
+.card-row:last-child{border-bottom:none;}
+.card-row label{font-size:14px;color:var(--text-muted);min-width:110px;flex-shrink:0;}
+.card-row input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;min-width:0;-webkit-appearance:none;}
+
+/* Location fields */
+.loc-zone-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px;}
+.loc-zone-row label{font-size:14px;color:var(--text-muted);min-width:130px;flex-shrink:0;}
+.loc-zone-row input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;min-width:0;-webkit-appearance:none;}
+.loc-zone-row select{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;-webkit-appearance:none;cursor:pointer;}
+.loc-zone-row select option{background:#1e2329;color:var(--text);}
+
+/* Section label */
+.section-label{font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:10px;padding-left:4px;}
+
+/* Apply All */
+.apply-all-bar{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.apply-all-bar label{font-size:12px;color:var(--text-muted);flex-shrink:0;}
+.apply-all-bar input{background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;font-family:var(--font);padding:6px 10px;outline:none;flex:1;min-width:80px;}
+.apply-all-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;font-family:var(--font);padding:7px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+
+/* Machine card */
+.machine-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;overflow:hidden;animation:slideIn 0.2s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.machine-header{background:var(--surface2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.machine-num{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);}
+.machine-product-preview{font-size:12px;color:var(--text-muted);flex:1;margin:0 8px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.remove-btn{width:26px;height:26px;border-radius:50%;background:var(--danger-dim);border:1px solid rgba(255,92,92,0.2);color:var(--danger);font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-family:var(--font);}
+.m-row{display:flex;align-items:center;padding:11px 14px;border-bottom:1px solid var(--border);gap:10px;}
+.m-row:last-child{border-bottom:none;}
+.m-row label{font-size:13px;color:var(--text-muted);min-width:90px;flex-shrink:0;}
+.m-row input{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);text-align:right;min-width:0;-webkit-appearance:none;}
+.m-row select{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);text-align:right;-webkit-appearance:none;cursor:pointer;}
+.m-row select option{background:#1e2329;color:var(--text);}
+.pour-row{display:flex;border-bottom:1px solid var(--border);}
+.pour-cell{flex:1;padding:10px 12px;display:flex;flex-direction:column;gap:3px;border-right:1px solid var(--border);}
+.pour-cell:last-child{border-right:none;}
+.pour-cell label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);}
+.pour-cell input{background:none;border:none;outline:none;color:var(--text);font-size:17px;font-weight:600;font-family:var(--font);width:100%;-webkit-appearance:none;}
+.pour-unit{font-size:10px;color:var(--text-dim);}
+.notes-row{padding:10px 14px;}
+.notes-row label{display:block;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;}
+.notes-row textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:9px 11px;resize:none;min-height:64px;outline:none;line-height:1.5;}
+
+/* Add buttons */
+.add-machine-btn{width:100%;padding:11px;background:var(--accent-dim);border:1px dashed rgba(255,0,204,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:4px;}
+.add-machine-btn:active{background:var(--accent-dim2);}
+
+/* Bottom bar */
+.btn-row{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:8px;}
+.btn{flex:1;padding:13px 8px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;transition:opacity 0.15s,transform 0.1s;display:flex;align-items:center;justify-content:center;gap:4px;}
+.btn:active{opacity:0.8;transform:scale(0.97);}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border-strong);}
+.btn-danger{background:var(--danger-dim);color:var(--danger);border:1px solid rgba(255,92,92,0.2);}
+.btn-save{background:rgba(255,0,204,0.15);color:var(--accent);border:1px solid rgba(255,0,204,0.3);}
+.btn-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,200,150,0.3);}
+
+/* Toast */
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-10px);background:var(--surface2);border:1px solid var(--border-strong);border-radius:100px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--text);opacity:0;pointer-events:none;transition:opacity 0.25s,transform 0.25s;white-space:nowrap;z-index:999;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.success{color:var(--accent);border-color:rgba(255,0,204,0.35);}
+.toast.green{color:var(--green);border-color:rgba(0,200,150,0.35);}
+
+/* Modals */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;align-items:flex-end;justify-content:center;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border-strong);border-radius:20px 20px 0 0;padding:20px;padding-bottom:max(24px,env(safe-area-inset-bottom));width:100%;max-width:480px;}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:8px;}
+.modal p{font-size:14px;color:var(--text-muted);margin-bottom:20px;line-height:1.5;}
+.modal-actions{display:flex;gap:10px;}
+.modal input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:20px;font-family:var(--font);padding:12px;outline:none;text-align:center;letter-spacing:0.3em;margin-bottom:16px;}
+
+/* Preview */
+.preview-modal{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;padding:20px 16px 110px;}
+.preview-modal.open{display:block;}
+.preview-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.preview-header h2{font-size:18px;font-weight:700;}
+.preview-close{padding:8px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:100px;color:var(--text);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);}
+.preview-text{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;font-size:13px;line-height:1.8;color:var(--text);white-space:pre-wrap;word-break:break-word;font-family:"SF Mono","Courier New",monospace;}
+.preview-actions{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:max(12px,env(safe-area-inset-bottom));background:rgba(13,15,18,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;gap:10px;}
+
+/* Reports view */
+.reports-view{padding:16px;}
+.report-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;cursor:pointer;}
+.report-item-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.report-item-title{font-size:14px;font-weight:600;color:var(--text);}
+.report-item-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
+.report-item-chevron{color:var(--text-dim);font-size:18px;transition:transform 0.2s;}
+.report-item.open .report-item-chevron{transform:rotate(90deg);}
+.report-item-body{display:none;padding:14px 16px;border-top:1px solid var(--border);}
+.report-item.open .report-item-body{display:block;}
+.report-item-body pre{font-size:12px;line-height:1.8;color:var(--text-muted);white-space:pre-wrap;word-break:break-word;font-family:"SF Mono","Courier New",monospace;}
+.reports-empty{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:14px;}
+.reports-loading{text-align:center;padding:60px 20px;color:var(--text-muted);font-size:14px;}
+
+/* PIN screen */
+.pin-screen{padding:40px 20px;text-align:center;}
+.pin-screen h2{font-size:20px;font-weight:700;margin-bottom:8px;}
+.pin-screen p{font-size:14px;color:var(--text-muted);margin-bottom:24px;}
+.pin-screen input{width:100%;max-width:200px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:28px;font-family:var(--font);padding:14px;outline:none;text-align:center;letter-spacing:0.5em;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;}
+.pin-error{color:var(--danger);font-size:13px;margin-top:-8px;margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -392,65 +160,89 @@
     <span>Boxbar</span>
     <span>Field Report</span>
   </div>
-  <div class="header-dot"></div>
+  <div class="header-right">
+    <span class="draft-badge" id="draftBadge" style="display:none">Draft saved</span>
+    <div class="header-dot"></div>
+  </div>
 </div>
 
-<!-- Event Details -->
-<div class="section">
-  <div class="section-label">Event Details</div>
-  <div class="card">
-    <div class="card-row">
-      <label>Event Name</label>
-      <input type="text" id="eventName" />
-    </div>
-    <div class="card-row" style="flex-direction:column; align-items:flex-start; gap:10px; padding-bottom:14px;">
-      <label style="font-size:14px; color:var(--text-muted);">Date</label>
-      <div style="display:flex; gap:8px; width:100%; align-items:center;">
-        <button onclick="setToday()" style="background:var(--accent-dim); border:1px solid rgba(255,0,204,0.3); border-radius:var(--radius-sm); color:var(--accent); font-size:12px; font-weight:600; font-family:var(--font); padding:8px 14px; cursor:pointer; white-space:nowrap; flex-shrink:0;">Today</button>
-        <input type="text" id="eventDateDisplay" placeholder="" style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:var(--font); padding:8px 10px; outline:none; min-width:0;" />
+<!-- Main nav: Report / Reports -->
+<div class="main-nav">
+  <button class="main-nav-btn active" id="mainnav-report" onclick="switchMainNav('report')">📋 Report</button>
+  <button class="main-nav-btn" id="mainnav-reports" onclick="switchMainNav('reports')">📊 Reports</button>
+</div>
+
+<!-- ══ REPORT SECTION ══ -->
+<div id="main-report">
+  <!-- Tab bar -->
+  <div class="tab-bar" id="tabBar">
+    <button class="tab-btn active" id="tab-event" onclick="switchTab('event')">📋 Event</button>
+    <button class="add-tab-btn" onclick="addLocation()" title="Add location">+</button>
+  </div>
+
+  <!-- Event tab panel -->
+  <div class="tab-panel active" id="panel-event">
+    <div class="section-label">Event Details</div>
+    <div class="card">
+      <div class="card-row">
+        <label>Event Name</label>
+        <input type="text" id="eventName" oninput="saveDraft()"/>
       </div>
-    </div>
-    <div class="card-row">
-      <label>Arrival Time</label>
-      <div style="display:flex; align-items:center; gap:4px; justify-content:flex-end;">
-        <input type="number" id="arrivalHour" min="1" max="12" placeholder="HH" oninput="formatArrival()" style="width:44px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:center; -webkit-appearance:none;" />
-        <span style="color:var(--text-muted); font-size:16px; font-weight:600;">:</span>
-        <input type="number" id="arrivalMin" min="0" max="59" placeholder="MM" oninput="formatArrival()" style="width:44px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:center; -webkit-appearance:none;" />
-        <select id="arrivalAmPm" style="background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); -webkit-appearance:none; cursor:pointer; margin-left:4px;">
-          <option value="" disabled selected></option>
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+      <div class="card-row" style="flex-direction:column;align-items:flex-start;gap:10px;padding-bottom:14px;">
+        <label style="font-size:14px;color:var(--text-muted);">Date</label>
+        <div style="display:flex;gap:8px;width:100%;align-items:center;">
+          <button onclick="setToday()" style="background:var(--accent-dim);border:1px solid rgba(255,0,204,0.3);border-radius:var(--radius-sm);color:var(--accent);font-size:12px;font-weight:600;font-family:var(--font);padding:8px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;">Today</button>
+          <input type="text" id="eventDateDisplay" placeholder="" oninput="saveDraft()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;outline:none;min-width:0;"/>
+        </div>
       </div>
-    </div>
-    <div class="card-row" style="border-bottom:none">
-      <label>Venue</label>
-      <input type="text" id="venue" />
+      <div class="card-row">
+        <label>Arrival Time</label>
+        <div style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+          <input type="number" id="arrivalHour" min="1" max="12" placeholder="HH" oninput="formatArrival();saveDraft()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
+          <span style="color:var(--text-muted);font-size:16px;font-weight:600;">:</span>
+          <input type="number" id="arrivalMin" min="0" max="59" placeholder="MM" oninput="formatArrival();saveDraft()" style="width:44px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:center;-webkit-appearance:none;"/>
+          <select id="arrivalAmPm" onchange="saveDraft()" style="background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);-webkit-appearance:none;cursor:pointer;margin-left:4px;">
+            <option value="">--</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-row" style="border-bottom:none">
+        <label>Venue</label>
+        <input type="text" id="venue" oninput="saveDraft()"/>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Stats -->
-<div class="stats-bar" id="statsBar" style="display:none">
-  <div class="stat-pill">📍 <strong id="statLocations">0</strong> locations</div>
-  <div class="stat-pill">🖥 <strong id="statMachines">0</strong> machines</div>
-  <div class="stat-pill">⏱ avg <strong id="statAvgPour">—</strong>s</div>
-</div>
-
-<!-- Locations -->
-<div class="section" style="padding-top:16px">
-  <div class="section-label">Locations</div>
-  <div id="locationsList"></div>
-  <button class="add-location-btn" onclick="addLocation()">
-    <span style="font-size:20px;line-height:1">+</span> Add Location
-  </button>
+<!-- ══ REPORTS SECTION ══ -->
+<div id="main-reports" style="display:none">
+  <!-- PIN screen -->
+  <div class="pin-screen" id="pinScreen">
+    <h2>Team Reports</h2>
+    <p>Enter your team PIN to view submitted reports</p>
+    <input type="password" id="pinInput" maxlength="6" placeholder="••••" oninput="checkPin()"/>
+    <div class="pin-error" id="pinError" style="display:none">Incorrect PIN. Try again.</div>
+    <button class="btn btn-primary" style="max-width:200px;margin:0 auto;" onclick="checkPin()">View Reports</button>
+  </div>
+  <!-- Reports list (shown after PIN) -->
+  <div class="reports-view" id="reportsView" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div class="section-label" style="margin:0">Submitted Reports</div>
+      <button onclick="loadReports()" style="background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);">↻ Refresh</button>
+    </div>
+    <div id="reportsList"></div>
+  </div>
 </div>
 
 <!-- Bottom buttons -->
-<div class="btn-row">
-  <button class="btn btn-secondary" onclick="openClearModal()">🗑 Clear</button>
+<div class="btn-row" id="reportBtnRow">
+  <button class="btn btn-danger" onclick="openClearModal()" style="flex:0.5;">🗑</button>
+  <button class="btn btn-save" onclick="saveDraft(true)">💾 Save</button>
   <button class="btn btn-secondary" onclick="previewReport()">👁 Preview</button>
-  <button class="btn btn-primary" onclick="copyReport()">📋 Copy Report</button>
+  <button class="btn btn-primary" onclick="copyReport()">📋 Copy</button>
+  <button class="btn btn-green" onclick="submitReport()">↑ Submit</button>
 </div>
 
 <!-- Clear Modal -->
@@ -465,6 +257,18 @@
   </div>
 </div>
 
+<!-- Submit confirm modal -->
+<div class="modal-bg" id="submitModal">
+  <div class="modal">
+    <h3>Submit report?</h3>
+    <p>This will send the completed report to the Boxbar team Google Sheet. You can still copy it to clipboard too.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" style="flex:1" onclick="closeSubmitModal()">Cancel</button>
+      <button class="btn btn-green" style="flex:1" onclick="confirmSubmit()">Submit</button>
+    </div>
+  </div>
+</div>
+
 <!-- Preview Modal -->
 <div class="preview-modal" id="previewModal">
   <div class="preview-header">
@@ -474,313 +278,524 @@
   <pre class="preview-text" id="previewText"></pre>
   <div class="preview-actions">
     <button class="btn btn-secondary" onclick="closePreview()">Back</button>
-    <button class="btn btn-primary" onclick="copyFromPreview()">📋 Copy Report</button>
+    <button class="btn btn-primary" onclick="copyFromPreview()">📋 Copy</button>
+    <button class="btn btn-green" onclick="closePreview();submitReport()">↑ Submit</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  let locationCount = 0;
-  let machineCounters = {};
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2NT_ijFIRsuTkp4ua9CtEkqEZeBwIc99lJlXHy4OdbYAObBOj3X3s0xpTO2vphUmWFg/exec";
+const TEAM_PIN   = "3105";
 
-  function addLocation() {
-    locationCount++;
-    const lid = locationCount;
-    machineCounters[lid] = 0;
+let locationCount = 0;
+let machineCounters = {};
+let activeTab = "event";
+let draftTimer = null;
+let pinUnlocked = false;
 
-    const list = document.getElementById('locationsList');
-    const block = document.createElement('div');
-    block.className = 'location-block';
-    block.id = 'loc-' + lid;
-    block.innerHTML = `
-      <div class="location-header">
-        <span class="location-tag">Location ${lid}</span>
-        <span class="location-name-preview" id="lname-${lid}"></span>
-        <button class="remove-location-btn" onclick="removeLocation(${lid})">Remove</button>
-      </div>
-      <div class="loc-zone-row">
-        <label>Zone / Area</label>
-        <input type="text" id="lzone-${lid}" oninput="updateLocationLabel(${lid})" />
-      </div>
-      <div class="loc-zone-row">
-        <label>Product Temperature</label>
-        <div style="display:flex; align-items:center; gap:4px; flex:1; justify-content:flex-end;">
-          <input type="number" id="ltemp-${lid}" placeholder="" style="width:80px; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none;" />
-          <span style="font-size:14px; color:var(--text-muted);">°C</span>
+// ── Main nav ──────────────────────────────────────
+function switchMainNav(view) {
+  document.getElementById("main-report").style.display  = view === "report"  ? "" : "none";
+  document.getElementById("main-reports").style.display = view === "reports" ? "" : "none";
+  document.getElementById("reportBtnRow").style.display  = view === "report"  ? "" : "none";
+  document.getElementById("mainnav-report").classList.toggle("active",  view === "report");
+  document.getElementById("mainnav-reports").classList.toggle("active", view === "reports");
+  if (view === "reports" && pinUnlocked) loadReports();
+}
+
+// ── PIN ───────────────────────────────────────────
+function checkPin() {
+  const val = document.getElementById("pinInput").value;
+  if (val === TEAM_PIN) {
+    pinUnlocked = true;
+    document.getElementById("pinScreen").style.display  = "none";
+    document.getElementById("reportsView").style.display = "";
+    loadReports();
+  } else if (val.length >= TEAM_PIN.length) {
+    document.getElementById("pinError").style.display = "";
+  }
+}
+
+// ── Tab navigation ────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  const panel = document.getElementById("panel-" + id);
+  const btn   = document.getElementById("tab-" + id);
+  if (panel) panel.classList.add("active");
+  if (btn)   btn.classList.add("active");
+  activeTab = id;
+}
+
+// ── Locations ─────────────────────────────────────
+function addLocation() {
+  locationCount++;
+  const lid = locationCount;
+  machineCounters[lid] = 0;
+
+  const tabBar = document.getElementById("tabBar");
+  const addBtn = tabBar.querySelector(".add-tab-btn");
+  const tabBtn = document.createElement("button");
+  tabBtn.className = "tab-btn";
+  tabBtn.id = "tab-loc-" + lid;
+  tabBtn.onclick = () => switchTab("loc-" + lid);
+  tabBtn.textContent = "📍 Loc " + lid;
+  tabBar.insertBefore(tabBtn, addBtn);
+
+  const panel = document.createElement("div");
+  panel.className = "tab-panel";
+  panel.id = "panel-loc-" + lid;
+  panel.innerHTML = buildLocationHTML(lid);
+  document.getElementById("main-report").appendChild(panel);
+
+  addMachine(lid); addMachine(lid); addMachine(lid);
+  switchTab("loc-" + lid);
+  saveDraft();
+}
+
+function buildLocationHTML(lid) {
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div class="section-label" style="margin:0">Location ${lid}</div>
+      <button class="btn btn-danger" style="flex:none;padding:6px 12px;font-size:12px;" onclick="removeLocation(${lid})">Remove</button>
+    </div>
+    <div class="card" style="margin-bottom:12px;">
+      <div class="loc-zone-row"><label>Zone / Area</label><input type="text" id="lzone-${lid}" oninput="updateTabLabel(${lid});saveDraft()"/></div>
+      <div class="loc-zone-row"><label>Product Temperature</label>
+        <div style="display:flex;align-items:center;gap:4px;flex:1;justify-content:flex-end;">
+          <input type="number" id="ltemp-${lid}" oninput="saveDraft()" style="width:80px;background:none;border:none;outline:none;color:var(--text);font-size:14px;font-family:var(--font);text-align:right;-webkit-appearance:none;"/>
+          <span style="font-size:14px;color:var(--text-muted);">°C</span>
         </div>
       </div>
-      <div class="loc-zone-row">
-        <label>Fresh Kegs</label>
-        <select id="lfreshKegs-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
-          <option value="" disabled selected></option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-      <div class="loc-zone-row">
-        <label>Internet</label>
-        <select id="linternet-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
-          <option value="" disabled selected></option>
-          <option value="Wifi">Wifi</option>
-          <option value="Ethernet">Ethernet</option>
-          <option value="Hotspot">Hotspot</option>
-        </select>
-      </div>
-      <div class="loc-zone-row" style="border-bottom:none;">
-        <label>Test Payment</label>
-        <select id="ltestPayment-${lid}" style="flex:1; background:none; border:none; outline:none; color:var(--text); font-size:14px; font-family:var(--font); text-align:right; -webkit-appearance:none; cursor:pointer;">
-          <option value="" disabled selected></option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-      </div>
-      <div class="notes-row" style="border-top:1px solid var(--border);">
+      <div class="loc-zone-row"><label>Fresh Kegs</label><select id="lfreshKegs-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+      <div class="loc-zone-row"><label>Internet</label><select id="linternet-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Wifi">Wifi</option><option value="Ethernet">Ethernet</option><option value="Hotspot">Hotspot</option></select></div>
+      <div class="loc-zone-row"><label>Test Payment</label><select id="ltestPayment-${lid}" onchange="saveDraft()"><option value="">—</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+      <div class="loc-zone-row" style="border-bottom:none;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
         <label>Staff Trained</label>
-        <textarea id="lstaffTrained-${lid}" rows="2" placeholder="" style="width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:var(--font); padding:9px 11px; resize:none; outline:none; line-height:1.5; margin-top:6px;"></textarea>
+        <textarea id="lstaffTrained-${lid}" rows="2" oninput="saveDraft()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;resize:none;outline:none;line-height:1.5;text-align:left;"></textarea>
       </div>
-      <div class="machines-area">
-        <div class="machines-sublabel">Machines</div>
-        <div id="machines-${lid}"></div>
-        <button class="add-machine-btn" onclick="addMachine(${lid})">
-          <span style="font-size:16px;line-height:1">+</span> Add Machine
-        </button>
-      </div>
-    `;
-    list.appendChild(block);
-    addMachine(lid);
-    addMachine(lid);
-    addMachine(lid);
-    updateStats();
-  }
+    </div>
+    <div class="section-label">Apply to All Machines</div>
+    <div class="apply-all-bar">
+      <label>Product</label><input type="text" id="applyProduct-${lid}" placeholder=""/>
+      <label>PSI</label><input type="number" id="applyPsi-${lid}" placeholder="" style="max-width:70px;"/>
+      <button class="apply-all-btn" onclick="applyAll(${lid})">Apply All</button>
+    </div>
+    <div class="section-label">Machines</div>
+    <div id="machines-${lid}"></div>
+    <button class="add-machine-btn" onclick="addMachine(${lid})"><span style="font-size:16px;line-height:1">+</span> Add Machine</button>
+  `;
+}
 
-  function removeLocation(lid) {
-    const el = document.getElementById('loc-' + lid);
-    if (el) {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(-6px)';
-      el.style.transition = 'opacity 0.2s, transform 0.2s';
-      setTimeout(() => { el.remove(); updateStats(); }, 200);
+function removeLocation(lid) {
+  document.getElementById("panel-loc-" + lid)?.remove();
+  document.getElementById("tab-loc-" + lid)?.remove();
+  switchTab("event");
+  saveDraft();
+}
+
+function updateTabLabel(lid) {
+  const zone = document.getElementById("lzone-" + lid);
+  const tab  = document.getElementById("tab-loc-" + lid);
+  if (zone && tab) tab.textContent = "📍 " + (zone.value.trim() || ("Loc " + lid));
+}
+
+// ── Apply All ──────────────────────────────────────
+function applyAll(lid) {
+  const product = document.getElementById("applyProduct-" + lid)?.value;
+  const psi     = document.getElementById("applyPsi-" + lid)?.value;
+  const panel   = document.getElementById("panel-loc-" + lid);
+  if (!panel) return;
+  panel.querySelectorAll(".machine-card").forEach(card => {
+    if (product) { const el = card.querySelector("[data-field='product']"); if (el) { el.value = product; updateMachineLabel(card.id.replace("mc-","")); } }
+    if (psi)     { const el = card.querySelector("[data-field='psi']");     if (el) el.value = psi; }
+  });
+  showToast("Applied to all machines");
+  saveDraft();
+}
+
+// ── Machines ───────────────────────────────────────
+function buildMachineHTML(lid, mid, uid) {
+  return `
+    <div class="machine-header">
+      <span class="machine-num">Machine ${mid}</span>
+      <span class="machine-product-preview" id="mp-${uid}"></span>
+      <button class="remove-btn" onclick="removeMachine('${uid}')">×</button>
+    </div>
+    <div class="m-row"><label>Machine No.</label><input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}');saveDraft()"/></div>
+    <div class="m-row"><label>Product</label><input type="text" data-field="product" oninput="updateMachineLabel('${uid}');saveDraft()"/></div>
+    <div class="m-row"><label>PSI</label><input type="number" data-field="psi" inputmode="decimal" oninput="saveDraft()"/></div>
+    <div class="m-row"><label>Gas Type</label>
+      <select data-field="gasType" onchange="saveDraft()">
+        <option value="">—</option><option value="CO2">CO2</option>
+        <option value="60/40">60/40</option><option value="70/30">70/30</option>
+      </select>
+    </div>
+    <div class="pour-row">
+      <div class="pour-cell"><label>Tap 1</label><input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="saveDraft()"/><span class="pour-unit">seconds</span></div>
+      <div class="pour-cell"><label>Tap 2</label><input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="saveDraft()"/><span class="pour-unit">seconds</span></div>
+    </div>
+    <div class="notes-row"><label>Notes</label><textarea data-field="notes" rows="3" oninput="saveDraft()"></textarea></div>
+  `;
+}
+
+function addMachine(lid) {
+  machineCounters[lid] = (machineCounters[lid] || 0) + 1;
+  const mid = machineCounters[lid];
+  const uid = lid + "_" + mid;
+  const list = document.getElementById("machines-" + lid);
+  const div = document.createElement("div");
+  div.className = "machine-card"; div.id = "mc-" + uid;
+  div.innerHTML = buildMachineHTML(lid, mid, uid);
+  list.appendChild(div);
+  saveDraft();
+}
+
+function removeMachine(uid) {
+  const el = document.getElementById("mc-" + uid);
+  if (el) { el.style.opacity="0"; el.style.transform="translateY(-5px)"; el.style.transition="opacity 0.18s,transform 0.18s"; setTimeout(()=>{el.remove();saveDraft();},180); }
+}
+
+function updateMachineLabel(uid) {
+  const card = document.getElementById("mc-" + uid);
+  if (!card) return;
+  const mn = card.querySelector("[data-field='machineNumber']").value.trim();
+  const pr = card.querySelector("[data-field='product']").value.trim();
+  const preview = document.getElementById("mp-" + uid);
+  if (preview) preview.textContent = [mn,pr].filter(Boolean).join(" · ");
+}
+
+// ── Format report ─────────────────────────────────
+function formatReport() {
+  const event       = document.getElementById("eventName").value.trim();
+  const date        = document.getElementById("eventDateDisplay").value.trim();
+  const arrivalHour = document.getElementById("arrivalHour").value.trim();
+  const arrivalMin  = document.getElementById("arrivalMin").value.trim();
+  const arrivalAmPm = document.getElementById("arrivalAmPm").value;
+  const arrivalFull = arrivalHour && arrivalMin ? arrivalHour+":"+arrivalMin.padStart(2,"0")+(arrivalAmPm?" "+arrivalAmPm:"") : "";
+  const venue       = document.getElementById("venue").value.trim();
+  let lines = [];
+  if (event)       lines.push("Event: " + event);
+  if (date)        lines.push("Date: " + date);
+  if (arrivalFull) lines.push("Arrival Time: " + arrivalFull);
+  if (venue)       lines.push("Venue: " + venue);
+  lines.push("");
+
+  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach((panel, li) => {
+    const lid = panel.id.replace("panel-loc-","");
+    const gv = id => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
+    const zone=gv("lzone-"+lid), temp=gv("ltemp-"+lid), freshKegs=gv("lfreshKegs-"+lid),
+          internet=gv("linternet-"+lid), testPayment=gv("ltestPayment-"+lid), staffTrained=gv("lstaffTrained-"+lid);
+    if (li > 0) lines.push("");
+    lines.push("📍 *" + (zone || ("Zone "+(li+1))) + "*");
+    if (temp)         lines.push("Product Temperature: " + temp + "°C");
+    if (freshKegs)    lines.push("Fresh Kegs: " + freshKegs);
+    if (internet)     lines.push("Internet: " + internet);
+    if (testPayment)  lines.push("Test Payment: " + testPayment);
+    if (staffTrained) lines.push("Staff Trained: " + staffTrained);
+    panel.querySelectorAll(".machine-card").forEach((card, mi) => {
+      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value.trim() : ""; };
+      lines.push("⸻");
+      lines.push("Machine: " + (get("machineNumber") || ("M"+(mi+1))));
+      if (get("product"))  lines.push("Product: " + get("product"));
+      if (get("gasType"))  lines.push("Gas Type: " + get("gasType"));
+      if (get("psi"))      lines.push("PSI: " + get("psi"));
+      if (get("tap1"))     lines.push("Tap 1: " + get("tap1") + "s");
+      if (get("tap2"))     lines.push("Tap 2: " + get("tap2") + "s");
+      if (get("notes"))    lines.push("Notes: " + get("notes"));
+    });
+  });
+  return lines.join("\n").trim();
+}
+
+// ── Submit to Google Sheets ───────────────────────
+function submitReport() {
+  document.getElementById("submitModal").classList.add("open");
+}
+
+function closeSubmitModal() {
+  document.getElementById("submitModal").classList.remove("open");
+}
+
+function confirmSubmit() {
+  closeSubmitModal();
+  const report = formatReport();
+  if (!document.querySelectorAll(".machine-card").length) { showToast("Add at least one machine first", false); return; }
+
+  // Build rows — one per machine
+  const rows = [];
+  const event       = document.getElementById("eventName").value.trim();
+  const date        = document.getElementById("eventDateDisplay").value.trim();
+  const arrivalHour = document.getElementById("arrivalHour").value.trim();
+  const arrivalMin  = document.getElementById("arrivalMin").value.trim();
+  const arrivalAmPm = document.getElementById("arrivalAmPm").value;
+  const arrivalFull = arrivalHour && arrivalMin ? arrivalHour+":"+arrivalMin.padStart(2,"0")+(arrivalAmPm?" "+arrivalAmPm:"") : "";
+  const venue       = document.getElementById("venue").value.trim();
+  const timestamp   = new Date().toLocaleString("en-GB");
+
+  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(panel => {
+    const lid = panel.id.replace("panel-loc-","");
+    const gv = id => { const el = document.getElementById(id); return el ? el.value.trim() : ""; };
+    const zone=gv("lzone-"+lid), temp=gv("ltemp-"+lid), freshKegs=gv("lfreshKegs-"+lid),
+          internet=gv("linternet-"+lid), testPayment=gv("ltestPayment-"+lid), staffTrained=gv("lstaffTrained-"+lid);
+    panel.querySelectorAll(".machine-card").forEach((card, mi) => {
+      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value.trim() : ""; };
+      rows.push([
+        timestamp, event, date, arrivalFull, venue,
+        zone, temp, freshKegs, internet, testPayment, staffTrained,
+        get("machineNumber")||("M"+(mi+1)), get("product"), get("gasType"), get("psi"),
+        get("tap1"), get("tap2"), get("notes")
+      ]);
+    });
+  });
+
+  showToast("Submitting...", true);
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rows })
+  }).then(() => {
+    showToast("Report submitted! ✓", true);
+    localStorage.removeItem("boxbar_draft");
+    document.getElementById("draftBadge").style.display = "none";
+  }).catch(() => {
+    showToast("Submit failed — copied instead", false);
+    copyReport();
+  });
+}
+
+// ── Load & display reports ────────────────────────
+function loadReports() {
+  const list = document.getElementById("reportsList");
+  list.innerHTML = "<div class='reports-loading'>Loading reports...</div>";
+  fetch(SCRIPT_URL + "?action=read")
+    .then(r => r.json())
+    .then(data => {
+      if (!data.rows || data.rows.length === 0) {
+        list.innerHTML = "<div class='reports-empty'>No reports submitted yet.</div>"; return;
+      }
+      // Group rows by event + date (col 1 + col 2)
+      const groups = {};
+      data.rows.slice(1).forEach(row => { // skip header row
+        const key = (row[1]||"Unknown Event") + " | " + (row[2]||"");
+        if (!groups[key]) groups[key] = { event:row[1], date:row[2], venue:row[4], timestamp:row[0], rows:[] };
+        groups[key].rows.push(row);
+      });
+      list.innerHTML = "";
+      Object.values(groups).reverse().forEach((group, gi) => {
+        const item = document.createElement("div");
+        item.className = "report-item";
+        item.id = "ritem-" + gi;
+        const reportText = buildReportText(group.rows);
+        item.innerHTML = `
+          <div class="report-item-header" onclick="toggleReport('ritem-${gi}')">
+            <div>
+              <div class="report-item-title">${group.event || "Unnamed Event"}</div>
+              <div class="report-item-sub">${group.date || ""} ${group.venue ? "· " + group.venue : ""}</div>
+            </div>
+            <span class="report-item-chevron">›</span>
+          </div>
+          <div class="report-item-body">
+            <pre>${reportText}</pre>
+            <button class="btn btn-secondary" style="margin-top:12px;flex:none;padding:10px 16px;" onclick="copyText(\`${reportText.replace(/`/g,"'")}\`)">📋 Copy</button>
+          </div>
+        `;
+        list.appendChild(item);
+      });
+    }).catch(() => {
+      list.innerHTML = "<div class='reports-empty'>Could not load reports. Check your connection.</div>";
+    });
+}
+
+function buildReportText(rows) {
+  if (!rows.length) return "";
+  const r = rows[0];
+  let lines = [];
+  if (r[1]) lines.push("Event: " + r[1]);
+  if (r[2]) lines.push("Date: " + r[2]);
+  if (r[3]) lines.push("Arrival Time: " + r[3]);
+  if (r[4]) lines.push("Venue: " + r[4]);
+  lines.push("");
+  let lastZone = null;
+  rows.forEach((row, ri) => {
+    const zone = row[5];
+    if (zone !== lastZone) {
+      if (ri > 0) lines.push("");
+      lines.push("📍 *" + (zone || "Zone") + "*");
+      if (row[6]) lines.push("Product Temperature: " + row[6] + "°C");
+      if (row[7]) lines.push("Fresh Kegs: " + row[7]);
+      if (row[8]) lines.push("Internet: " + row[8]);
+      if (row[9]) lines.push("Test Payment: " + row[9]);
+      if (row[10]) lines.push("Staff Trained: " + row[10]);
+      lastZone = zone;
     }
-  }
+    lines.push("⸻");
+    lines.push("Machine: " + (row[11]||""));
+    if (row[12]) lines.push("Product: " + row[12]);
+    if (row[13]) lines.push("Gas Type: " + row[13]);
+    if (row[14]) lines.push("PSI: " + row[14]);
+    if (row[15]) lines.push("Tap 1: " + row[15] + "s");
+    if (row[16]) lines.push("Tap 2: " + row[16] + "s");
+    if (row[17]) lines.push("Notes: " + row[17]);
+  });
+  return lines.join("\n").trim();
+}
 
-  function updateLocationLabel(lid) {
-    const zone = document.getElementById('lzone-' + lid);
-    const preview = document.getElementById('lname-' + lid);
-    if (zone && preview) preview.textContent = zone.value.trim();
-  }
+function toggleReport(id) {
+  document.getElementById(id).classList.toggle("open");
+}
 
-  function addMachine(lid) {
-    machineCounters[lid] = (machineCounters[lid] || 0) + 1;
-    const mid = machineCounters[lid];
-    const uid = lid + '_' + mid;
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(()=>showToast("Copied!")).catch(()=>{
+    const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    showToast("Copied!");
+  });
+}
 
-    const list = document.getElementById('machines-' + lid);
-    const div = document.createElement('div');
-    div.className = 'machine-card';
-    div.id = 'mc-' + uid;
-    div.innerHTML = `
-      <div class="machine-header">
-        <span class="machine-num">Machine ${mid}</span>
-        <span class="machine-product-preview" id="mp-${uid}"></span>
-        <button class="remove-btn" onclick="removeMachine('${uid}')">×</button>
-      </div>
-      <div class="m-row">
-        <label>Machine No.</label>
-        <input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}')" />
-      </div>
-      <div class="m-row">
-        <label>Product</label>
-        <input type="text" data-field="product" oninput="updateMachineLabel('${uid}')" />
-      </div>
-      <div class="m-row">
-        <label>PSI</label>
-        <input type="number" data-field="psi" inputmode="decimal" />
-      </div>
-      <div class="m-row">
-        <label>Gas Type</label>
-        <select data-field="gasType">
-          <option value="" disabled selected></option>
-          <option value="CO2">CO2</option>
-          <option value="60/40">60/40</option>
-          <option value="70/30">70/30</option>
-        </select>
-      </div>
-      <div class="pour-row">
-        <div class="pour-cell">
-          <label>Tap 1</label>
-          <input type="number" step="0.1" data-field="tap1" inputmode="decimal" oninput="updateStats()" />
-          <span class="pour-unit">seconds</span>
-        </div>
-        <div class="pour-cell">
-          <label>Tap 2</label>
-          <input type="number" step="0.1" data-field="tap2" inputmode="decimal" oninput="updateStats()" />
-          <span class="pour-unit">seconds</span>
-        </div>
-      </div>
-      <div class="notes-row">
-        <label>Notes</label>
-        <textarea data-field="notes" rows="3"></textarea>
-      </div>
-    `;
-    list.appendChild(div);
-    updateStats();
-  }
+// ── Draft ─────────────────────────────────────────
+function saveDraft(manual) {
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(() => {
+    try {
+      const data = collectState();
+      localStorage.setItem("boxbar_draft", JSON.stringify(data));
+      const badge = document.getElementById("draftBadge");
+      badge.style.display = "inline";
+      if (manual) showToast("Draft saved!");
+      setTimeout(() => { if (!manual) badge.style.display = "none"; }, 3000);
+    } catch(e) {}
+  }, manual ? 0 : 1500);
+}
 
-  function removeMachine(uid) {
-    const el = document.getElementById('mc-' + uid);
-    if (el) {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(-5px)';
-      el.style.transition = 'opacity 0.18s, transform 0.18s';
-      setTimeout(() => { el.remove(); updateStats(); }, 180);
-    }
-  }
+function collectState() {
+  const locs = [];
+  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(panel => {
+    const lid = panel.id.replace("panel-loc-","");
+    const machines = [];
+    panel.querySelectorAll(".machine-card").forEach(card => {
+      const get = f => { const el = card.querySelector("[data-field='"+f+"']"); return el ? el.value : ""; };
+      machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), gasType:get("gasType"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
+    });
+    const gv = id => { const el = document.getElementById(id); return el ? el.value : ""; };
+    locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), machines });
+  });
+  return { eventName:document.getElementById("eventName").value, date:document.getElementById("eventDateDisplay").value, arrivalHour:document.getElementById("arrivalHour").value, arrivalMin:document.getElementById("arrivalMin").value, arrivalAmPm:document.getElementById("arrivalAmPm").value, venue:document.getElementById("venue").value, locationCount, machineCounters, locs };
+}
 
-  function updateMachineLabel(uid) {
-    const card = document.getElementById('mc-' + uid);
-    if (!card) return;
-    const mn = card.querySelector('[data-field="machineNumber"]').value.trim();
-    const pr = card.querySelector('[data-field="product"]').value.trim();
-    const preview = document.getElementById('mp-' + uid);
-    if (preview) preview.textContent = [mn, pr].filter(Boolean).join(' · ');
-  }
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem("boxbar_draft");
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    const sv = (id,val) => { const el=document.getElementById(id); if(el) el.value=val||""; };
+    sv("eventName",data.eventName); sv("eventDateDisplay",data.date);
+    sv("arrivalHour",data.arrivalHour); sv("arrivalMin",data.arrivalMin);
+    const amPm = document.getElementById("arrivalAmPm");
+    if (amPm && data.arrivalAmPm) amPm.value = data.arrivalAmPm;
+    sv("venue",data.venue);
+    locationCount = data.locationCount || 0;
+    machineCounters = data.machineCounters || {};
 
-  function updateStats() {
-    const locs = document.querySelectorAll('.location-block');
-    const machines = document.querySelectorAll('.machine-card');
-    const bar = document.getElementById('statsBar');
-    bar.style.display = locs.length > 0 ? 'flex' : 'none';
-    document.getElementById('statLocations').textContent = locs.length;
-    document.getElementById('statMachines').textContent = machines.length;
+    (data.locs||[]).forEach(loc => {
+      const lid = parseInt(loc.lid);
+      const tabBar = document.getElementById("tabBar");
+      const addBtn = tabBar.querySelector(".add-tab-btn");
+      const tabBtn = document.createElement("button");
+      tabBtn.className = "tab-btn"; tabBtn.id = "tab-loc-"+lid;
+      tabBtn.onclick = () => switchTab("loc-"+lid);
+      tabBtn.textContent = "📍 " + (loc.zone||("Loc "+lid));
+      tabBar.insertBefore(tabBtn, addBtn);
 
-    let pours = [];
-    machines.forEach(card => {
-      ['tap1','tap2'].forEach(f => {
-        const el = card.querySelector('[data-field="' + f + '"]');
-        if (el && el.value) pours.push(parseFloat(el.value));
+      const panel = document.createElement("div");
+      panel.className = "tab-panel"; panel.id = "panel-loc-"+lid;
+      panel.innerHTML = buildLocationHTML(lid);
+      document.getElementById("main-report").appendChild(panel);
+
+      const sv2=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||"";};
+      sv2("lzone-"+lid,loc.zone); sv2("ltemp-"+lid,loc.temp);
+      const setSelect=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+      setSelect("lfreshKegs-"+lid,loc.freshKegs); setSelect("linternet-"+lid,loc.internet);
+      setSelect("ltestPayment-"+lid,loc.testPayment); sv2("lstaffTrained-"+lid,loc.staffTrained);
+
+      (loc.machines||[]).forEach((m,mi) => {
+        machineCounters[lid] = mi+1;
+        const uid = lid+"_"+(mi+1);
+        const list = document.getElementById("machines-"+lid);
+        const div = document.createElement("div");
+        div.className="machine-card"; div.id="mc-"+uid;
+        div.innerHTML = buildMachineHTML(lid, mi+1, uid);
+        list.appendChild(div);
+        const set=(field,val)=>{const el=div.querySelector("[data-field='"+field+"']");if(el)el.value=val||"";};
+        set("machineNumber",m.machineNumber); set("product",m.product); set("psi",m.psi);
+        set("gasType",m.gasType); set("tap1",m.tap1); set("tap2",m.tap2); set("notes",m.notes);
+        updateMachineLabel(uid);
       });
     });
+    document.getElementById("draftBadge").style.display = "inline";
+    return true;
+  } catch(e) { return false; }
+}
 
-    document.getElementById('statAvgPour').textContent =
-      pours.length > 0 ? (pours.reduce((a,b) => a+b, 0) / pours.length).toFixed(1) : '—';
-  }
+// ── Utilities ─────────────────────────────────────
+function showToast(msg, success) {
+  if (success===undefined) success=true;
+  const t = document.getElementById("toast");
+  t.textContent=msg; t.className="toast"+(success?" success":"");
+  t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2500);
+}
 
-  function formatReport() {
-    const event       = document.getElementById('eventName').value.trim();
-    const date        = document.getElementById('eventDateDisplay').value.trim();
-    const arrivalHour = document.getElementById('arrivalHour').value.trim();
-    const arrivalMin  = document.getElementById('arrivalMin').value.trim();
-    const arrivalAmPm = document.getElementById('arrivalAmPm').value;
-    const arrivalFull = arrivalHour && arrivalMin
-      ? arrivalHour + ':' + arrivalMin.padStart(2,'0') + (arrivalAmPm ? ' ' + arrivalAmPm : '')
-      : '';
-    const venue       = document.getElementById('venue').value.trim();
+function copyReport() {
+  const text = formatReport();
+  if (!document.querySelectorAll(".machine-card").length) { showToast("Add at least one machine",false); return; }
+  navigator.clipboard.writeText(text).then(()=>showToast("Report copied!")).catch(()=>{
+    const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); showToast("Report copied!");
+  });
+}
 
-    let lines = [];
-    if (event)       lines.push('Event: ' + event);
-    if (date)        lines.push('Date: ' + date);
-    if (arrivalFull)     lines.push('Arrival Time: ' + arrivalFull);
-    if (venue)       lines.push('Venue: ' + venue);
-    lines.push('');
+function previewReport() {
+  document.getElementById("previewText").textContent = formatReport() || "(No data entered yet)";
+  document.getElementById("previewModal").classList.add("open");
+}
+function closePreview() { document.getElementById("previewModal").classList.remove("open"); }
+function copyFromPreview() { copyReport(); setTimeout(closePreview,400); }
+function openClearModal() { document.getElementById("clearModal").classList.add("open"); }
+function closeClearModal() { document.getElementById("clearModal").classList.remove("open"); }
 
-    const locBlocks = document.querySelectorAll('.location-block');
-    locBlocks.forEach((block, li) => {
-      const lid = block.id.replace('loc-', '');
-      const zone        = (document.getElementById('lzone-' + lid) || {}).value || '';
-      const temp        = (document.getElementById('ltemp-' + lid) || {}).value || '';
-      const freshKegs   = (document.getElementById('lfreshKegs-' + lid) || {}).value || '';
-      const internet    = (document.getElementById('linternet-' + lid) || {}).value || '';
-      const testPayment = (document.getElementById('ltestPayment-' + lid) || {}).value || '';
-      const staffTrained = (document.getElementById('lstaffTrained-' + lid) || {}).value || '';
+function clearAll() {
+  ["eventName","venue","eventDateDisplay","arrivalHour","arrivalMin"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  document.getElementById("arrivalAmPm").value="";
+  document.querySelectorAll(".tab-panel[id^='panel-loc-']").forEach(p=>p.remove());
+  document.querySelectorAll(".tab-btn[id^='tab-loc-']").forEach(b=>b.remove());
+  locationCount=0; machineCounters={};
+  closeClearModal();
+  localStorage.removeItem("boxbar_draft");
+  document.getElementById("draftBadge").style.display="none";
+  switchTab("event");
+  showToast("Template cleared");
+}
 
-      if (li > 0) lines.push('');
-      lines.push('📍 *' + (zone.trim() || ('Zone ' + (li + 1))) + '*');
-      if (temp)         lines.push('Product Temperature: ' + temp + '°C');
-      if (freshKegs)    lines.push('Fresh Kegs: ' + freshKegs);
-      if (internet)     lines.push('Internet: ' + internet);
-      if (testPayment)  lines.push('Test Payment: ' + testPayment);
-      if (staffTrained) lines.push('Staff Trained: ' + staffTrained);
+function formatArrival() {
+  const minEl=document.getElementById("arrivalMin");
+  if (minEl.value.length===2 && parseInt(minEl.value)>59) minEl.value="59";
+  const hourEl=document.getElementById("arrivalHour");
+  if (parseInt(hourEl.value)>12) hourEl.value="12";
+  if (parseInt(hourEl.value)<1 && hourEl.value!=="") hourEl.value="1";
+}
 
-      const machineCards = block.querySelectorAll('.machine-card');
-      machineCards.forEach((card, mi) => {
-        const get = f => { const el = card.querySelector('[data-field="' + f + '"]'); return el ? el.value.trim() : ''; };
-        lines.push('⸻');
-        lines.push('Machine: ' + (get('machineNumber') || ('M' + (mi + 1))));
-        if (get('product'))  lines.push('Product: ' + get('product'));
-        if (get('gasType'))  lines.push('Gas Type: ' + get('gasType'));
-        if (get('psi'))      lines.push('PSI: ' + get('psi'));
-        if (get('tap1'))     lines.push('Tap 1: ' + get('tap1') + 's');
-        if (get('tap2'))     lines.push('Tap 2: ' + get('tap2') + 's');
-        if (get('notes'))    lines.push('Notes: ' + get('notes'));
-      });
-    });
+function setToday() {
+  const now=new Date();
+  document.getElementById("eventDateDisplay").value=now.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+  saveDraft();
+}
 
-    return lines.join('\n').trim();
-  }
-
-  function showToast(msg, success) {
-    if (success === undefined) success = true;
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast' + (success ? ' success' : '');
-    t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 2200);
-  }
-
-  function copyReport() {
-    const text = formatReport();
-    if (!document.querySelectorAll('.machine-card').length) {
-      showToast('Add at least one location & machine', false); return;
-    }
-    navigator.clipboard.writeText(text).then(function() {
-      showToast('Report copied!');
-    }).catch(function() {
-      const ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-      document.body.removeChild(ta); showToast('Report copied!');
-    });
-  }
-
-  function previewReport() {
-    document.getElementById('previewText').textContent = formatReport() || '(No data entered yet)';
-    document.getElementById('previewModal').classList.add('open');
-  }
-
-  function closePreview() { document.getElementById('previewModal').classList.remove('open'); }
-  function copyFromPreview() { copyReport(); setTimeout(closePreview, 400); }
-
-  function openClearModal() { document.getElementById('clearModal').classList.add('open'); }
-  function closeClearModal() { document.getElementById('clearModal').classList.remove('open'); }
-
-  function formatArrival() {
-    const minEl = document.getElementById('arrivalMin');
-    if (minEl.value.length === 2 && parseInt(minEl.value) > 59) minEl.value = '59';
-    const hourEl = document.getElementById('arrivalHour');
-    if (parseInt(hourEl.value) > 12) hourEl.value = '12';
-    if (parseInt(hourEl.value) < 1 && hourEl.value !== '') hourEl.value = '1';
-  }
-
-  function setToday() {
-    const now = new Date();
-    const formatted = now.toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
-    document.getElementById('eventDateDisplay').value = formatted;
-  }
-
-  function clearAll() {
-    ['eventName','venue','eventDateDisplay','arrivalHour','arrivalMin'].forEach(function(id) { document.getElementById(id).value = ''; });
-    document.getElementById('arrivalAmPm').selectedIndex = 0;
-    document.getElementById('locationsList').innerHTML = '';
-    locationCount = 0; machineCounters = {};
-    closeClearModal();
-    addLocation();
-    updateStats();
-    showToast('Template cleared');
-  }
-
-  // Init with one location
-  addLocation();
+// ── Init ──────────────────────────────────────────
+if (!loadDraft()) { addLocation(); }
 </script>
 </body>
 </html>
