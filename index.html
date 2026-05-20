@@ -272,8 +272,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
 
   <div style="display:flex;gap:10px;margin-top:8px;padding-bottom:20px;">
-    <button class="btn btn-secondary" style="flex:1" onclick="clearPostEvent()">🗑 Clear</button>
-    <button class="btn btn-primary"   style="flex:1" onclick="copyPostEvent()">📋 Copy Report</button>
+    <button class="btn btn-danger"    style="flex:0.6" onclick="clearPostEvent()">🗑</button>
+    <button class="btn btn-secondary" style="flex:1"   onclick="previewPostEvent()">👁 Preview</button>
+    <button class="btn btn-primary"   style="flex:1"   onclick="copyPostEvent()">📋 Copy</button>
   </div>
 </div>
 
@@ -954,6 +955,25 @@ function clearPostEvent() {
   resetPeToggle("pe-cleaningBrief");
   try { localStorage.removeItem("boxbar_postevent"); } catch(e) {}
   showToast("Post-event report cleared");
+}
+
+function previewPostEvent() {
+  const gv = id => { const el=document.getElementById(id); return el ? el.value.trim() : ""; };
+  let lines = [];
+  lines.push("*POST-EVENT REPORT*");
+  lines.push("");
+  if (gv("pe-eventClient"))      { lines.push("Event & Client: " + gv("pe-eventClient")); lines.push(""); }
+  if (gv("pe-generalFeedback"))  { lines.push("*General Feedback*"); lines.push(gv("pe-generalFeedback")); lines.push(""); }
+  if (gv("pe-staffProvided"))    { lines.push("*Staff Provided*"); lines.push(gv("pe-staffProvided")); lines.push(""); }
+  if (gv("pe-machineSetup"))     { lines.push("*Machine Setup Before Arrival*"); lines.push(gv("pe-machineSetup")); lines.push(""); }
+  if (gv("pe-issuesOnArrival"))  { lines.push("*Issues with Machines on Arrival*"); lines.push(gv("pe-issuesOnArrival")); lines.push(""); }
+  if (gv("pe-issuesDuring"))     { lines.push("*Issues Throughout the Event*"); lines.push(gv("pe-issuesDuring")); lines.push(""); }
+  if (gv("pe-dispenseIssues"))   { lines.push("*Drink Dispense Issues*"); lines.push(gv("pe-dispenseIssues")); lines.push(""); }
+  if (gv("pe-signage"))          { lines.push("*Additional Signage Provided*"); lines.push(gv("pe-signage")); lines.push(""); }
+  if (gv("pe-cleaningBrief"))    { lines.push("*Staff Briefed on Cleaning*"); lines.push(gv("pe-cleaningBrief")); lines.push(""); }
+  if (gv("pe-additionalNotes"))  { lines.push("*Additional Notes*"); lines.push(gv("pe-additionalNotes")); }
+  document.getElementById("previewText").textContent = lines.join("\n").trim() || "(No data entered yet)";
+  document.getElementById("previewModal").classList.add("open");
 }
 
 function copyPostEvent() {
