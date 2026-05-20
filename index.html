@@ -130,6 +130,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .venue-option:last-child{border-bottom:none;}
 .venue-option:active{background:var(--surface2);}
 .venue-option.no-match{color:var(--text-muted);font-style:italic;cursor:default;}
+
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(255,0,204,0.15);border:1px solid rgba(255,0,204,0.3);color:var(--accent);font-size:10px;font-weight:700;cursor:pointer;margin-left:6px;vertical-align:middle;flex-shrink:0;line-height:1;}
+.info-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:400;align-items:flex-end;justify-content:center;}
+.info-modal-bg.open{display:flex;}
+.info-modal{background:var(--surface);border:1px solid var(--border-strong);border-radius:20px 20px 0 0;padding:20px;padding-bottom:max(30px,env(safe-area-inset-bottom));width:100%;max-width:480px;}
+.info-modal h4{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:10px;}
+.info-modal p{font-size:13px;color:var(--text-muted);line-height:1.7;white-space:pre-line;}
+.info-modal-close{width:100%;margin-top:18px;padding:13px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;}
 </style>
 </head>
 <body>
@@ -145,8 +153,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 </div>
 
 <div class="main-nav">
-  <button class="main-nav-btn active" id="mn-report" onclick="switchMain('report')">📋 Report</button>
-  <button class="main-nav-btn"        id="mn-drafts" onclick="switchMain('drafts')">💾 Drafts</button>
+  <button class="main-nav-btn active" id="mn-report"    onclick="switchMain('report')">📋 Report</button>
+  <button class="main-nav-btn"        id="mn-postevent" onclick="switchMain('postevent')">📝 Post-Event</button>
+  <button class="main-nav-btn"        id="mn-drafts"    onclick="switchMain('drafts')">💾 Drafts</button>
 </div>
 
 <!-- ══ REPORT ══ -->
@@ -190,6 +199,81 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
         </button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══ POST-EVENT ══ -->
+<div id="main-postevent" style="display:none;padding:16px;padding-bottom:30px;">
+  <div class="section-label">Post-Event Report</div>
+  <div class="card" style="margin-bottom:12px;">
+    <div class="card-row">
+      <label>Event Name & Client</label>
+      <input type="text" id="pe-eventClient" oninput="savePostEvent()" style="text-align:right;"/>
+    </div>
+  </div>
+
+  <div class="section-label" style="display:flex;align-items:center;">General Feedback <span class="info-icon" onclick="showInfo('generalFeedback')">i</span></div>
+  <div class="card" style="margin-bottom:12px;">
+    <div style="padding:12px 14px;">
+      <textarea id="pe-generalFeedback" rows="4" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+  </div>
+
+  <div class="section-label">Staff & Setup</div>
+  <div class="card" style="margin-bottom:12px;">
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;">Staff Provided <span class="info-icon" onclick="showInfo('staffProvided')">i</span></div>
+      <textarea id="pe-staffProvided" rows="2" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Machine Setup Before Arrival?</div>
+      <div style="display:flex;gap:8px;">
+        <button id="pe-machineSetup-yes" onclick="setPeToggle('pe-machineSetup','Yes')" style="flex:1;padding:10px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);transition:all 0.15s;">Yes</button>
+        <button id="pe-machineSetup-no"  onclick="setPeToggle('pe-machineSetup','No')"  style="flex:1;padding:10px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);transition:all 0.15s;">No</button>
+      </div>
+      <input type="hidden" id="pe-machineSetup" value=""/>
+    </div>
+  </div>
+
+  <div class="section-label">Issues & Concerns</div>
+  <div class="card" style="margin-bottom:12px;">
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Any Issues with Machines on Arrival</div>
+      <textarea id="pe-issuesOnArrival" rows="3" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;">Issues with Machines Throughout the Event <span class="info-icon" onclick="showInfo('issuesDuring')">i</span></div>
+      <textarea id="pe-issuesDuring" rows="3" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;">Drink Dispense Issues <span class="info-icon" onclick="showInfo('dispenseIssues')">i</span></div>
+      <textarea id="pe-dispenseIssues" rows="3" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+  </div>
+
+  <div class="section-label">Additional Info</div>
+  <div class="card" style="margin-bottom:12px;">
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;">Any Additional Signage Provided <span class="info-icon" onclick="showInfo('signage')">i</span></div>
+      <textarea id="pe-signage" rows="2" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+    <div style="padding:12px 14px;border-bottom:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Staff Briefed on Cleaning?</div>
+      <div style="display:flex;gap:8px;">
+        <button id="pe-cleaningBrief-yes" onclick="setPeToggle('pe-cleaningBrief','Yes')" style="flex:1;padding:10px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);transition:all 0.15s;">Yes</button>
+        <button id="pe-cleaningBrief-no"  onclick="setPeToggle('pe-cleaningBrief','No')"  style="flex:1;padding:10px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--surface2);color:var(--text-muted);transition:all 0.15s;">No</button>
+      </div>
+      <input type="hidden" id="pe-cleaningBrief" value=""/>
+    </div>
+    <div style="padding:12px 14px;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Additional Notes</div>
+      <textarea id="pe-additionalNotes" rows="3" oninput="savePostEvent()" placeholder="" style="width:100%;background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);resize:none;line-height:1.6;"></textarea>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-top:8px;padding-bottom:20px;">
+    <button class="btn btn-secondary" style="flex:1" onclick="clearPostEvent()">🗑 Clear</button>
+    <button class="btn btn-primary"   style="flex:1" onclick="copyPostEvent()">📋 Copy Report</button>
   </div>
 </div>
 
@@ -249,6 +333,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
 </div>
 
+<!-- Info modal -->
+<div class="info-modal-bg" id="infoModal">
+  <div class="info-modal">
+    <h4 id="infoModalTitle"></h4>
+    <p id="infoModalText"></p>
+    <button class="info-modal-close" onclick="closeInfo()">Got it</button>
+  </div>
+</div>
+
 <!-- Preview modal -->
 <div class="preview-modal" id="previewModal">
   <div class="preview-header">
@@ -266,7 +359,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzh6D8vVIX0m-fBSwrhYkvguKF3fTT-11C9eerF7vSC5Uj4JuL4fdV-cZWmLZ8cwqZ5mA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoiAWmetB6sbnELIrj-zqn6HhGWj7vJmK1D9R39M_wV1hSSxf8tC7NkYjHuclnUyPFmw/exec";
 const DRAFTS_KEY = "boxbar_drafts_v2";
 
 let locationCount = 0;
@@ -350,11 +443,13 @@ function confirmNewVenue() {
 
 // ── Main nav ──────────────────────────────────────
 function switchMain(view) {
-  document.getElementById("main-report").style.display  = view === "report" ? "" : "none";
-  document.getElementById("main-drafts").style.display  = view === "drafts" ? "" : "none";
-  document.getElementById("reportBtnRow").style.display = view === "report" ? "" : "none";
-  document.getElementById("mn-report").classList.toggle("active", view === "report");
-  document.getElementById("mn-drafts").classList.toggle("active", view === "drafts");
+  document.getElementById("main-report").style.display     = view === "report"    ? "" : "none";
+  document.getElementById("main-postevent").style.display  = view === "postevent" ? "" : "none";
+  document.getElementById("main-drafts").style.display     = view === "drafts"    ? "" : "none";
+  document.getElementById("reportBtnRow").style.display    = view === "report"    ? "" : "none";
+  ["mn-report","mn-postevent","mn-drafts"].forEach(id => {
+    document.getElementById(id).classList.toggle("active", id === "mn-" + view);
+  });
   if (view === "drafts") renderDrafts();
 }
 
@@ -389,6 +484,10 @@ function buildLocationHTML(lid) {
       <div class="loc-zone-row" style="border-bottom:none;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
         <label>Staff Trained</label>
         <textarea id="lstaffTrained-${lid}" rows="2" oninput="autoSave()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;resize:none;outline:none;line-height:1.5;text-align:left;"></textarea>
+      </div>
+      <div class="loc-zone-row" style="border-bottom:none;align-items:flex-start;padding-top:14px;padding-bottom:14px;">
+        <label>General Notes</label>
+        <textarea id="lnotes-${lid}" rows="3" oninput="autoSave()" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px;font-family:var(--font);padding:8px 10px;resize:none;outline:none;line-height:1.5;text-align:left;" placeholder="Missing parts, concerns, arrival notes..."></textarea>
       </div>
     </div>
     <div class="section-label">Apply to All Machines</div>
@@ -499,7 +598,7 @@ function collectState() {
       machines.push({ machineNumber:get("machineNumber"), product:get("product"), psi:get("psi"), tap1:get("tap1"), tap2:get("tap2"), notes:get("notes") });
     });
     const gv = id => { const el = document.getElementById(id); return el ? el.value : ""; };
-    locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), machines });
+    locs.push({ lid, zone:gv("lzone-"+lid), temp:gv("ltemp-"+lid), freshKegs:gv("lfreshKegs-"+lid), internet:gv("linternet-"+lid), testPayment:gv("ltestPayment-"+lid), staffTrained:gv("lstaffTrained-"+lid), notes:gv("lnotes-"+lid), machines });
   });
   return {
     eventName: document.getElementById("eventName").value,
@@ -537,6 +636,7 @@ function restoreState(data) {
     const setSel=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
     setSel("lfreshKegs-"+lid,loc.freshKegs); setSel("linternet-"+lid,loc.internet);
     setSel("ltestPayment-"+lid,loc.testPayment); sv2("lstaffTrained-"+lid,loc.staffTrained);
+    sv2("lnotes-"+lid,loc.notes);
     (loc.machines||[]).forEach((m,mi) => {
       machineCounters[lid]=mi+1;
       const uid=lid+"_"+(mi+1);
@@ -661,6 +761,7 @@ function buildReportText(data) {
     if (loc.internet)     lines.push("Internet: "+loc.internet);
     if (loc.testPayment)  lines.push("Test Payment: "+loc.testPayment);
     if (loc.staffTrained) lines.push("Staff Trained: "+loc.staffTrained);
+    if (loc.notes)        lines.push("Notes: "+loc.notes);
     (loc.machines||[]).forEach((m,mi) => {
       lines.push("⸻");
       lines.push("Machine: "+(m.machineNumber||("M"+(mi+1))));
@@ -764,8 +865,113 @@ function setToday() {
   autoSave();
 }
 
+// ── Info tooltips ─────────────────────────────────
+const INFO_CONTENT = {
+  generalFeedback: {
+    title: "General Feedback",
+    text: "• How busy was the event?\n• Were the other bars busy?\n• Were the machines in a good location for passing trade?\n• What was the general customer feedback on the machine?\n• Any client feedback provided on the service?"
+  },
+  staffProvided: {
+    title: "Staff Provided",
+    text: "• Who were the names of the staff provided to support you for ID checking and customer service (front of house)?\n• Were any bar backs provided for stock changes?"
+  },
+  issuesDuring: {
+    title: "Issues Throughout the Event",
+    text: "Were there any issues with the machines and their parts? If so, please summarise any changes or actions taken to mitigate this.\n\nExample: The up and down motion within Machine 1 slowed down or broke, leading to a changed part."
+  },
+  dispenseIssues: {
+    title: "Drink Dispense Issues",
+    text: "Were there any issues with the pour and was this escalated?\n\nExample: The pints on Machine 4 poured with excessive head."
+  },
+  signage: {
+    title: "Additional Signage Provided",
+    text: "Any signage provided to support the visibility of the bar — please describe briefly how much and what type."
+  }
+};
+
+function showInfo(key) {
+  const info = INFO_CONTENT[key];
+  if (!info) return;
+  document.getElementById("infoModalTitle").textContent = info.title;
+  document.getElementById("infoModalText").textContent  = info.text;
+  document.getElementById("infoModal").classList.add("open");
+}
+
+function closeInfo() {
+  document.getElementById("infoModal").classList.remove("open");
+}
+
+// ── Post-Event Report ─────────────────────────────
+const PE_FIELDS = [
+  "pe-eventClient","pe-generalFeedback","pe-staffProvided","pe-machineSetup",
+  "pe-issuesOnArrival","pe-issuesDuring","pe-dispenseIssues",
+  "pe-signage","pe-cleaningBrief","pe-additionalNotes"
+];
+
+function setPeToggle(field, value) {
+  document.getElementById(field).value = value;
+  const yes = document.getElementById(field + "-yes");
+  const no  = document.getElementById(field + "-no");
+  if (yes) { yes.style.background = value === "Yes" ? "var(--green-dim)" : "var(--surface2)"; yes.style.color = value === "Yes" ? "var(--green)" : "var(--text-muted)"; yes.style.borderColor = value === "Yes" ? "rgba(0,200,150,0.4)" : "var(--border)"; }
+  if (no)  { no.style.background  = value === "No"  ? "var(--danger-dim)" : "var(--surface2)"; no.style.color  = value === "No"  ? "var(--danger)" : "var(--text-muted)"; no.style.borderColor  = value === "No"  ? "rgba(255,92,92,0.4)" : "var(--border)"; }
+  savePostEvent();
+}
+
+function resetPeToggle(field) {
+  document.getElementById(field).value = "";
+  const yes = document.getElementById(field + "-yes");
+  const no  = document.getElementById(field + "-no");
+  const def = "background:var(--surface2);color:var(--text-muted);border-color:var(--border);";
+  if (yes) yes.style.cssText += def;
+  if (no)  no.style.cssText  += def;
+}
+
+function savePostEvent() {
+  const data = {};
+  PE_FIELDS.forEach(id => { const el=document.getElementById(id); if(el) data[id]=el.value; });
+  try { localStorage.setItem("boxbar_postevent", JSON.stringify(data)); } catch(e) {}
+}
+
+function loadPostEvent() {
+  try {
+    const raw = localStorage.getItem("boxbar_postevent");
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    PE_FIELDS.forEach(id => { const el=document.getElementById(id); if(el && data[id]) el.value=data[id]; });
+    if (data["pe-machineSetup"])  setPeToggle("pe-machineSetup",  data["pe-machineSetup"]);
+    if (data["pe-cleaningBrief"]) setPeToggle("pe-cleaningBrief", data["pe-cleaningBrief"]);
+  } catch(e) {}
+}
+
+function clearPostEvent() {
+  PE_FIELDS.forEach(id => { const el=document.getElementById(id); if(el) el.value=""; });
+  resetPeToggle("pe-machineSetup");
+  resetPeToggle("pe-cleaningBrief");
+  try { localStorage.removeItem("boxbar_postevent"); } catch(e) {}
+  showToast("Post-event report cleared");
+}
+
+function copyPostEvent() {
+  const gv = id => { const el=document.getElementById(id); return el ? el.value.trim() : ""; };
+  let lines = [];
+  lines.push("*POST-EVENT REPORT*");
+  lines.push("");
+  if (gv("pe-eventClient"))      { lines.push("Event & Client: " + gv("pe-eventClient")); lines.push(""); }
+  if (gv("pe-generalFeedback"))  { lines.push("*General Feedback*"); lines.push(gv("pe-generalFeedback")); lines.push(""); }
+  if (gv("pe-staffProvided"))    { lines.push("*Staff Provided*"); lines.push(gv("pe-staffProvided")); lines.push(""); }
+  if (gv("pe-machineSetup"))     { lines.push("*Machine Setup Before Arrival*"); lines.push(gv("pe-machineSetup")); lines.push(""); }
+  if (gv("pe-issuesOnArrival"))  { lines.push("*Issues with Machines on Arrival*"); lines.push(gv("pe-issuesOnArrival")); lines.push(""); }
+  if (gv("pe-issuesDuring"))     { lines.push("*Issues Throughout the Event*"); lines.push(gv("pe-issuesDuring")); lines.push(""); }
+  if (gv("pe-dispenseIssues"))   { lines.push("*Drink Dispense Issues*"); lines.push(gv("pe-dispenseIssues")); lines.push(""); }
+  if (gv("pe-signage"))          { lines.push("*Additional Signage Provided*"); lines.push(gv("pe-signage")); lines.push(""); }
+  if (gv("pe-cleaningBrief"))    { lines.push("*Staff Briefed on Cleaning*"); lines.push(gv("pe-cleaningBrief")); lines.push(""); }
+  if (gv("pe-additionalNotes"))  { lines.push("*Additional Notes*"); lines.push(gv("pe-additionalNotes")); }
+  copyText(lines.join("\n").trim());
+}
+
 // ── Init ──────────────────────────────────────────
 loadVenues();
+loadPostEvent();
 if (!loadCurrent()) { addLocation(); }
 </script>
 </body>
