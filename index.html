@@ -552,7 +552,12 @@ function buildMachineHTML(lid, mid, uid) {
       <span class="machine-product-preview" id="mp-${uid}"></span>
       <button class="remove-btn" onclick="removeMachine('${uid}')">×</button>
     </div>
-    <div class="m-row"><label>Machine No.</label><input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}');autoSave()"/></div>
+    <div class="m-row"><label>Machine No.</label>
+      <div style="display:flex;align-items:center;gap:4px;justify-content:flex-end;">
+        <span style="color:var(--text-muted);font-size:14px;font-weight:600;">M</span>
+        <input type="text" data-field="machineNumber" oninput="updateMachineLabel('${uid}');autoSave()" style="width:80px;text-align:left;"/>
+      </div>
+    </div>
     <div class="m-row"><label>Product</label><input type="text" data-field="product" oninput="updateMachineLabel('${uid}');autoSave()"/></div>
     <div class="m-row"><label>PSI</label><input type="number" data-field="psi" inputmode="decimal" oninput="autoSave()"/></div>
     <div class="pour-row">
@@ -584,7 +589,7 @@ function updateMachineLabel(uid) {
   const mn = card.querySelector("[data-field='machineNumber']").value.trim();
   const pr = card.querySelector("[data-field='product']").value.trim();
   const preview = document.getElementById("mp-" + uid);
-  if (preview) preview.textContent = [mn,pr].filter(Boolean).join(" · ");
+  if (preview) preview.textContent = [mn ? "M"+mn : "", pr].filter(Boolean).join(" · ");
 }
 
 // ── State ─────────────────────────────────────────
@@ -764,7 +769,7 @@ function buildReportText(data) {
     if (loc.notes)        lines.push("Notes: "+loc.notes);
     (loc.machines||[]).forEach((m,mi) => {
       lines.push("⸻");
-      lines.push("Machine: "+(m.machineNumber||("M"+(mi+1))));
+      lines.push("Machine: "+(m.machineNumber ? "M"+m.machineNumber : ("M"+(mi+1))));
       if (m.product) lines.push("Product: "+m.product);
       if (m.psi)     lines.push("PSI: "+m.psi);
       if (m.tap1)    lines.push("Tap 1: "+m.tap1+"s");
@@ -795,7 +800,7 @@ function confirmSubmit() {
       rows.push([
         timestamp, data.eventName||"", data.date||"", arrivalFull, data.venue||"",
         loc.zone||"", loc.temp||"", loc.freshKegs||"", loc.internet||"", loc.testPayment||"", loc.staffTrained||"",
-        m.machineNumber||("M"+(mi+1)), m.product||"", m.psi||"", m.tap1||"", m.tap2||"", m.notes||""
+        (m.machineNumber ? "M"+m.machineNumber : ("M"+(mi+1))), m.product||"", m.psi||"", m.tap1||"", m.tap2||"", m.notes||""
       ]);
     });
   });
